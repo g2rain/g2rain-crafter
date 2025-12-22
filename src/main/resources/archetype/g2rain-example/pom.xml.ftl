@@ -8,7 +8,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.0.0</version>
+        <version>4.0.1</version>
     </parent>
 
     <groupId>${groupId}</groupId>
@@ -33,7 +33,7 @@
         <pagehelper.version>2.1.1</pagehelper.version>
         <mysql.version>9.5.0</mysql.version>
         <mapstruct.version>1.6.3</mapstruct.version>
-        <g2rain.common.version>0.1.1</g2rain.common.version>
+        <g2rain.common.version>1.0.0</g2rain.common.version>
         <g2rain.crafter.version>1.0.0</g2rain.crafter.version>
         <flatten.maven.plugin.version>1.7.3</flatten.maven.plugin.version>
         <maven.source.plugin.version>3.3.1</maven.source.plugin.version>

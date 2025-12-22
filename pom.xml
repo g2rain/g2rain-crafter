@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.g2rain</groupId>
+    <artifactId>g2rain-crafter</artifactId>
+    <version>1.0.0</version>
+    <packaging>maven-plugin</packaging>
+
+    <name>G2Rain Crafter</name>
+    <description>
+        Project and Code Generator, Interactive Maven plugin to generate project skeleton and business code
+    </description>
+
+    <!-- Project URL: Maven Central 要求必须配置 -->
+    <url>https://github.com/g2rain/g2rain-crafter</url>
+
+    <scm>
+        <url>https://github.com/g2rain/g2rain-crafter</url>
+        <connection>scm:git:https://github.com/g2rain/g2rain-crafter.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/g2rain/g2rain-crafter.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <organization>
+        <name>G2rain</name>
+        <url>http://www.g2rain.com/</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <name>Jagger</name>
+            <email>g2rain_developer@163.com</email>
+            <organization>G2rain</organization>
+            <organizationUrl>http://www.g2rain.com/</organizationUrl>
+        </developer>
+        <developer>
+            <id>alpha</id>
+            <name>Alpha</name>
+            <organization>G2rain</organization>
+            <organizationUrl>http://www.g2rain.com/</organizationUrl>
+        </developer>
+    </developers>
+
+    <distributionManagement>
+        <!-- Snapshot 仓库配置 -->
+        <snapshotRepository>
+            <id>central</id>
+            <url>https://central.sonatype.com/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <!-- Release 仓库由 central-publishing-maven-plugin 自动处理，无需配置 -->
+    </distributionManagement>
+
+    <properties>
+        <maven.plugin.version>3.9.11</maven.plugin.version>
+        <g2rain.generator.version>1.0.0</g2rain.generator.version>
+        <junit.jupiter.version>5.10.0</junit.jupiter.version>
+        <lombok.version>1.18.30</lombok.version>
+        <mockito.core.version>5.7.0</mockito.core.version>
+        <junit.suite.engine.version>1.10.0</junit.suite.engine.version>
+        <junit.suite.api.version>1.10.0</junit.suite.api.version>
+        <maven.plugin.tools.version>3.15.1</maven.plugin.tools.version>
+        <compiler.plugin.version>3.11.0</compiler.plugin.version>
+        <compiler.surefire.version>3.2.5</compiler.surefire.version>
+        <maven.source.plugin.version>3.3.1</maven.source.plugin.version>
+        <maven.javadoc.plugin.version>3.12.0</maven.javadoc.plugin.version>
+        <flatten.maven.plugin.version>1.7.3</flatten.maven.plugin.version>
+        <maven.gpg.plugin.version>3.2.7</maven.gpg.plugin.version>
+        <central.publishing.maven.plugin.version>0.9.0</central.publishing.maven.plugin.version>
+        <maven.compiler.release>21</maven.compiler.release>
+        <maven.compiler.target>21</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.apache.maven</groupId>
+                <artifactId>maven-core</artifactId>
+                <version>${maven.plugin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.maven</groupId>
+                <artifactId>maven-plugin-api</artifactId>
+                <version>${maven.plugin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.maven.plugin-tools</groupId>
+                <artifactId>maven-plugin-annotations</artifactId>
+                <version>${maven.plugin.tools.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.g2rain</groupId>
+                <artifactId>g2rain-generator-maven-plugin</artifactId>
+                <version>${g2rain.generator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>${junit.jupiter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${mockito.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.platform</groupId>
+                <artifactId>junit-platform-suite-engine</artifactId>
+                <version>${junit.suite.engine.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.platform</groupId>
+                <artifactId>junit-platform-suite-api</artifactId>
+                <version>${junit.suite.api.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-core</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-plugin-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugin-tools</groupId>
+            <artifactId>maven-plugin-annotations</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.g2rain</groupId>
+            <artifactId>g2rain-generator-maven-plugin</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-suite-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-suite-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-plugin-plugin</artifactId>
+                <version>${maven.plugin.tools.version}</version>
+                <configuration>
+                    <goalPrefix>g2rain</goalPrefix>
+                    <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>default-descriptor</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>descriptor</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>help-descriptor</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>helpmojo</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${compiler.plugin.version}</version>
+                <configuration>
+                    <release>${maven.compiler.release}</release>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <showWarnings>true</showWarnings>
+                    <showDeprecation>true</showDeprecation>
+                    <compilerArgs>
+                        <!-- 启用方法参数元数据保留, 支持反射获取参数名 -->
+                        <arg>-parameters</arg>
+                    </compilerArgs>
+                    <!-- 配置注解处理器依赖路径 -->
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${compiler.surefire.version}</version>
+                <configuration>
+                    <argLine>-XX:+EnableDynamicAgentLoading -Xshare:off</argLine>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.junit.jupiter</groupId>
+                        <artifactId>junit-jupiter-engine</artifactId>
+                        <version>${junit.jupiter.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <!-- 源码包插件：生成sources jar，发布到maven仓库时方便用户查看源码 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${maven.source.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Javadoc插件：生成javadoc jar，方便文档查看 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven.javadoc.plugin.version}</version>
+                <configuration>
+                    <release>${maven.compiler.target}</release>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <doclint>none</doclint>
+                    <additionalJOption>-Xdoclint:none</additionalJOption>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!-- 发布 profile：签名 + Sonatype staging -->
+    <profiles>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <!-- GPG 签名插件：生成已签名的 jar / pom -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>${maven.gpg.plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                                <configuration>
+                                    <gpgArguments>
+                                        <arg>--batch</arg>
+                                        <arg>--pinentry-mode</arg>
+                                        <arg>loopback</arg>
+                                    </gpgArguments>
+                                    <passphrase>${env.MAVEN_GPG_PASSPHRASE}</passphrase>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!-- Central Publishing Maven Plugin：使用新的 Central Publisher Portal -->
+                    <!-- 参考文档：https://central.sonatype.org/publish/publish-portal-maven/ -->
+                    <plugin>
+                        <groupId>org.sonatype.central</groupId>
+                        <artifactId>central-publishing-maven-plugin</artifactId>
+                        <version>${central.publishing.maven.plugin.version}</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <publishingServerId>central</publishingServerId>
+                            <!-- 自动发布，无需手动干预（适合 CI 构建） -->
+                            <autoPublish>true</autoPublish>
+                            <!-- 等待直到发布完成 -->
+                            <waitUntil>published</waitUntil>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>

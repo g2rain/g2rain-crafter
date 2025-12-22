@@ -1,0 +1,38 @@
+# 顶层级配置，所有子目录继承
+root = true
+
+[*]
+# 编码格式
+charset = utf-8
+indent_size = 4
+indent_style = space
+max_line_length = 120
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[*.yml]
+indent_size = 2
+
+[*.yaml]
+indent_size = 2
+
+[*.java]
+# 类/接口命名规范（大驼峰）
+identifier_case = upperCamelCase
+# 方法/变量命名规范（小驼峰）
+method_name_case = lowerCamelCase
+variable_name_case = lowerCamelCase
+# 常量命名规范（全大写）
+constant_name_case = UPPER_CASE_WITH_UNDERSCORES
+
+# 注释规范
+comment_single_line_prefix = //
+comment_block_start = /*
+comment_block_end = */
+javadoc_comment_prefix = *
+javadoc_comment_line_end =
+
+# 格式规则
+break_after_comma = true
+align_multiline_parameters = true
+wrap_after_method_name = true

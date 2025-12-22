@@ -6,7 +6,7 @@
 
     <groupId>com.g2rain</groupId>
     <artifactId>g2rain-crafter</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <packaging>maven-plugin</packaging>
 
     <name>G2Rain Crafter</name>

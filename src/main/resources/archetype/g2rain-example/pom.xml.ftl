@@ -34,7 +34,7 @@
         <mysql.version>9.5.0</mysql.version>
         <mapstruct.version>1.6.3</mapstruct.version>
         <g2rain.common.version>1.0.0</g2rain.common.version>
-        <g2rain.crafter.version>1.0.0</g2rain.crafter.version>
+        <g2rain.crafter.version>1.0.1</g2rain.crafter.version>
         <flatten.maven.plugin.version>1.7.3</flatten.maven.plugin.version>
         <maven.source.plugin.version>3.3.1</maven.source.plugin.version>
         <maven.compiler.release>21</maven.compiler.release>

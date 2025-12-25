@@ -6,7 +6,7 @@
 
     <groupId>com.g2rain</groupId>
     <artifactId>g2rain-crafter</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <packaging>maven-plugin</packaging>
 
     <name>G2Rain Crafter</name>
@@ -63,7 +63,7 @@
 
     <properties>
         <maven.plugin.version>3.9.11</maven.plugin.version>
-        <g2rain.generator.version>1.0.0</g2rain.generator.version>
+        <g2rain.generator.version>1.0.1</g2rain.generator.version>
         <junit.jupiter.version>5.10.0</junit.jupiter.version>
         <lombok.version>1.18.30</lombok.version>
         <mockito.core.version>5.7.0</mockito.core.version>

@@ -51,7 +51,7 @@ g2rain-crafter 是一个企业级 Maven 插件，用于快速生成项目骨架�
 
 * Java 21+
 * Maven 3.6+
-* Spring Boot 3.5+
+* Spring Boot 4.0+
 
 ### 安装插件
 
@@ -64,7 +64,7 @@ g2rain-crafter 是一个企业级 Maven 插件，用于快速生成项目骨架�
         <plugin>
             <groupId>com.g2rain</groupId>
             <artifactId>g2rain-crafter</artifactId>
-            <version>1.0.1</version>
+            <version>1.0.2</version>
             <configuration>
                 <phase>foundry</phase>
                 <!-- 可选：全局默认配置 -->
@@ -124,21 +124,21 @@ tables.overwrite=false
 
 ```bash
 # 项目无需安装插件, 直接运行即可
-mvn com.g2rain:g2rain-crafter:1.0.1:bootstrap
+mvn com.g2rain:g2rain-crafter:1.0.2:bootstrap
 ```
 
 仅生成项目骨架：
 
 ```bash
 # 项目无需安装插件, 直接运行即可
-mvn com.g2rain:g2rain-crafter:1.0.1:bootstrap -Dphase=skeleton
+mvn com.g2rain:g2rain-crafter:1.0.2:bootstrap -Dphase=skeleton
 ```
 
 仅生成业务代码：
 
 ```bash
 # 项目无需安装插件, 直接运行即可
-mvn com.g2rain:g2rain-crafter:1.0.1:bootstrap -Dphase=foundry
+mvn com.g2rain:g2rain-crafter:1.0.2:bootstrap -Dphase=foundry
 ```
 
 #### 2️⃣ 非交互式生成（直接传参数，无需输入）
@@ -147,7 +147,7 @@ mvn com.g2rain:g2rain-crafter:1.0.1:bootstrap -Dphase=foundry
 
 ```bash
 # 项目无需安装插件, 直接运行即可
-mvn com.g2rain:g2rain-crafter:1.0.1:bootstrap \
+mvn com.g2rain:g2rain-crafter:1.0.2:bootstrap \
   -Darchetype.groupId=com.g2rain \
   -Darchetype.artifactId=g2rain-dmeo \
   -Darchetype.version=1.0.0 \

@@ -41,7 +41,7 @@ tables.overwrite=false
         <plugin>
             <groupId>com.g2rain</groupId>
             <artifactId>g2rain-crafter</artifactId>
-            <version>1.0.2</version>
+            <version>1.0.3</version>
             <configuration>
                 <phase>foundry</phase>
                 <!-- 可选：全局默认配置 -->
@@ -78,7 +78,7 @@ tables.overwrite=false
 
 ```bash
 # 需要在项目根目录执行, 但是这种方式其实是项目没有安装插件, 直接运行即可令; 如果安装了插件默认会使用插件的配置文件
-mvn com.g2rain:g2rain-crafter:1.0.2:bootstrap -Dphase=foundry
+mvn com.g2rain:g2rain-crafter:1.0.3:bootstrap -Dphase=foundry
 ```
 
 > ⚠️ 命令必须在项目根目录执行。

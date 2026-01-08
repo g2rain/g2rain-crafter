@@ -114,7 +114,7 @@ public class ArgumentResolverConfig implements WebMvcConfigurer {
                 pageBinder.bind(new MutablePropertyValues(webRequest.getParameterMap()));
 
                 // 5️⃣ 绑定 query 的业务字段，带 query 前缀
-                WebDataBinder queryBinder = binderFactory.createBinder(webRequest, query, "listSelectWebDataBinder");
+                WebDataBinder queryBinder = binderFactory.createBinder(webRequest, query, "bizSelectWebDataBinder");
                 Map<String, String[]> parameters = webRequest.getParameterMap().entrySet().stream().collect(Collectors.toMap(
                     e -> e.getKey().replaceFirst("^query\\.", ""), Map.Entry::getValue
                 ));

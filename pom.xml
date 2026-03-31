@@ -234,7 +234,8 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${compiler.surefire.version}</version>
                 <configuration>
-                    <argLine>-XX:+EnableDynamicAgentLoading -Xshare:off</argLine>
+                    <!-- Mockito inline mocks + Byte Buddy: JDK 25 classfile (69) requires experimental mode until Byte Buddy fully supports it -->
+                    <argLine>-XX:+EnableDynamicAgentLoading -Xshare:off -Dnet.bytebuddy.experimental=true</argLine>
                 </configuration>
                 <dependencies>
                     <dependency>

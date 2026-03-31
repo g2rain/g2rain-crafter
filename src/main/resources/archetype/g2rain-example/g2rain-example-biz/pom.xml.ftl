@@ -31,8 +31,8 @@
             <artifactId>mybatis-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <groupId>com.g2rain</groupId>
+            <artifactId>g2rain-starter-mybatis-pagination</artifactId>
         </dependency>
         <dependency>
             <groupId>com.mysql</groupId>

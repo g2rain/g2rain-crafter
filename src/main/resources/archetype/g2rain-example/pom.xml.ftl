@@ -30,14 +30,14 @@
     <properties>
         <revision>${version}</revision>
         <mybatis.version>4.0.0</mybatis.version>
-        <pagehelper.version>2.1.1</pagehelper.version>
         <mysql.version>9.5.0</mysql.version>
         <mapstruct.version>1.6.3</mapstruct.version>
-        <g2rain.common.version>1.0.2</g2rain.common.version>
-        <g2rain.crafter.version>1.0.3</g2rain.crafter.version>
+        <g2rain.common.version>1.0.3</g2rain.common.version>
+        <g2rain.starter.mybatis.pagination.version>1.0.2</g2rain.starter.mybatis.pagination.version>
+        <g2rain.crafter.version>1.0.4</g2rain.crafter.version>
         <flatten.maven.plugin.version>1.7.3</flatten.maven.plugin.version>
         <maven.source.plugin.version>3.3.1</maven.source.plugin.version>
-        <maven.compiler.release>21</maven.compiler.release>
+        <maven.compiler.release>25</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -49,14 +49,14 @@
                 <version>${"$"}{mybatis.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.github.pagehelper</groupId>
-                <artifactId>pagehelper-spring-boot-starter</artifactId>
-                <version>${"$"}{pagehelper.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>com.mysql</groupId>
                 <artifactId>mysql-connector-j</artifactId>
                 <version>${"$"}{mysql.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.g2rain</groupId>
+                <artifactId>g2rain-starter-mybatis-pagination</artifactId>
+                <version>${"$"}{g2rain.starter.mybatis.pagination.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.mapstruct</groupId>

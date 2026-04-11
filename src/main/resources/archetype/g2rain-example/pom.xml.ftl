@@ -8,7 +8,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.0.1</version>
+        <version>4.0.5</version>
     </parent>
 
     <groupId>${groupId}</groupId>
@@ -29,14 +29,19 @@
 
     <properties>
         <revision>${version}</revision>
-        <mybatis.version>4.0.0</mybatis.version>
-        <mysql.version>9.5.0</mysql.version>
+        <!--
+            spring boot 4.0.5 引入的是3.1.0 但是3.1.0 有漏洞, 所以升级到3.1.1,
+            后续如果升级spring boot 版本, 酌情是否删掉这个属性
+        -->
+        <jackson-bom.version>3.1.1</jackson-bom.version>
+        <mybatis.version>4.0.1</mybatis.version>
+        <mysql.version>9.6.0</mysql.version>
         <mapstruct.version>1.6.3</mapstruct.version>
-        <g2rain.common.version>1.0.3</g2rain.common.version>
-        <g2rain.starter.mybatis.pagination.version>1.0.2</g2rain.starter.mybatis.pagination.version>
-        <g2rain.crafter.version>1.0.4</g2rain.crafter.version>
+        <g2rain.common.version>1.0.4</g2rain.common.version>
+        <g2rain.starter.mybatis.pagination.version>1.0.3</g2rain.starter.mybatis.pagination.version>
+        <g2rain.crafter.version>1.0.5</g2rain.crafter.version>
         <flatten.maven.plugin.version>1.7.3</flatten.maven.plugin.version>
-        <maven.source.plugin.version>3.3.1</maven.source.plugin.version>
+        <maven.source.plugin.version>3.4.0</maven.source.plugin.version>
         <maven.compiler.release>25</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>

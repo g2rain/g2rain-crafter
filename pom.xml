@@ -6,7 +6,7 @@
 
     <groupId>com.g2rain</groupId>
     <artifactId>g2rain-crafter</artifactId>
-    <version>1.0.4</version>
+    <version>1.0.5</version>
     <packaging>maven-plugin</packaging>
 
     <name>G2Rain Crafter</name>
@@ -62,23 +62,22 @@
     </distributionManagement>
 
     <properties>
-        <maven.plugin.version>3.9.11</maven.plugin.version>
-        <g2rain.generator.version>1.0.2</g2rain.generator.version>
-        <junit.jupiter.version>5.10.0</junit.jupiter.version>
+        <maven.plugin.version>3.9.14</maven.plugin.version>
+        <g2rain.generator.version>1.0.4</g2rain.generator.version>
+        <junit.jupiter.version>6.0.3</junit.jupiter.version>
         <lombok.version>1.18.44</lombok.version>
-        <mockito.core.version>5.7.0</mockito.core.version>
-        <junit.suite.engine.version>1.10.0</junit.suite.engine.version>
-        <junit.suite.api.version>1.10.0</junit.suite.api.version>
+        <mockito.core.version>5.23.0</mockito.core.version>
+        <junit.suite.engine.version>6.0.3</junit.suite.engine.version>
+        <junit.suite.api.version>6.0.3</junit.suite.api.version>
         <maven.plugin.tools.version>3.15.2</maven.plugin.tools.version>
-        <compiler.plugin.version>3.11.0</compiler.plugin.version>
-        <compiler.surefire.version>3.2.5</compiler.surefire.version>
-        <maven.source.plugin.version>3.3.1</maven.source.plugin.version>
+        <compiler.plugin.version>3.15.0</compiler.plugin.version>
+        <compiler.surefire.version>3.5.0</compiler.surefire.version>
+        <maven.source.plugin.version>3.4.0</maven.source.plugin.version>
         <maven.javadoc.plugin.version>3.12.0</maven.javadoc.plugin.version>
         <flatten.maven.plugin.version>1.7.3</flatten.maven.plugin.version>
-        <maven.gpg.plugin.version>3.2.7</maven.gpg.plugin.version>
-        <central.publishing.maven.plugin.version>0.9.0</central.publishing.maven.plugin.version>
+        <maven.gpg.plugin.version>3.2.8</maven.gpg.plugin.version>
+        <central.publishing.maven.plugin.version>0.10.0</central.publishing.maven.plugin.version>
         <maven.compiler.release>25</maven.compiler.release>
-        <maven.compiler.target>25</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -266,7 +265,7 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>${maven.javadoc.plugin.version}</version>
                 <configuration>
-                    <release>${maven.compiler.target}</release>
+                    <release>${maven.compiler.release}</release>
                     <encoding>${project.build.sourceEncoding}</encoding>
                     <doclint>none</doclint>
                     <additionalJOption>-Xdoclint:none</additionalJOption>

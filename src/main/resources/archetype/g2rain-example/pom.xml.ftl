@@ -38,8 +38,8 @@
         <mysql.version>9.6.0</mysql.version>
         <mapstruct.version>1.6.3</mapstruct.version>
         <g2rain.common.version>1.0.4</g2rain.common.version>
-        <g2rain.starter.mybatis.pagination.version>1.0.3</g2rain.starter.mybatis.pagination.version>
-        <g2rain.crafter.version>1.0.5</g2rain.crafter.version>
+        <g2rain.starter.mybatis.pagination.version>1.0.4</g2rain.starter.mybatis.pagination.version>
+        <g2rain.crafter.version>1.0.6</g2rain.crafter.version>
         <flatten.maven.plugin.version>1.7.3</flatten.maven.plugin.version>
         <maven.source.plugin.version>3.4.0</maven.source.plugin.version>
         <maven.compiler.release>25</maven.compiler.release>

@@ -1,6 +1,7 @@
 package com.g2rain.crafter;
 
 import com.g2rain.crafter.config.SkeletonConfigTest;
+import com.g2rain.crafter.generator.SkeletonGeneratorCodegenPropertiesTest;
 import com.g2rain.crafter.generator.SkeletonGeneratorTest;
 import com.g2rain.crafter.utils.ConstantsTest;
 import org.junit.platform.suite.api.SelectClasses;
@@ -19,6 +20,8 @@ import org.junit.platform.suite.api.Suite;
         SkeletonGeneratorTest.class,
 
         BootstrapMojoTest.class,
+        BootstrapMojoConfigTest.class,
+        SkeletonGeneratorCodegenPropertiesTest.class,
 })
 public class AllTestsSuite {
 }

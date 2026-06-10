@@ -12,7 +12,6 @@
     </parent>
 
     <artifactId>${projectName}-api</artifactId>
-    <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <name>${projectName}-api</name>

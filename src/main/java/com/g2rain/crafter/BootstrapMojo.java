@@ -44,7 +44,7 @@ import java.util.stream.Stream;
  *     -Darchetype.groupId=com.g2rain \
  *     -Darchetype.artifactId=g2rain-demo \
  *     -Darchetype.version=1.0.0 \
- *     -Darchetype.package=com.g2rain.demo \
+ *     -Dproject.basePackage=com.g2rain.demo \
  *     -Ddatabase.url=jdbc:mysql://localhost:3306/test \
  *     -Ddatabase.driver=com.mysql.cj.jdbc.Driver \
  *     -Ddatabase.username=root \
@@ -98,10 +98,22 @@ public class BootstrapMojo extends AbstractMojo {
     protected String version;
 
     /**
-     * Java 基础包名（必填）
+     * Java 基础包名（已废弃，请使用 {@link #projectBasePackage}）。
+     *
+     * <p>仍支持 {@code -Darchetype.package} 与配置文件中的 {@code archetype.package}，
+     * 以便旧项目平滑迁移。</p>
+     *
+     * @deprecated 请改用 {@code project.basePackage} / {@code -Dproject.basePackage}
      */
+    @Deprecated
     @Parameter(property = "archetype.package")
     protected String basePackage;
+
+    /**
+     * Java 基础包名（推荐）。
+     */
+    @Parameter(property = "project.basePackage")
+    protected String projectBasePackage;
 
     /**
      * 项目描述（可选）
@@ -150,6 +162,24 @@ public class BootstrapMojo extends AbstractMojo {
      */
     @Parameter(property = "config.file")
     private File configFile;
+
+    /**
+     * 是否为租户表生成数据隔离相关代码。
+     */
+    @Parameter(property = "data.isolation.withIsolation")
+    private Boolean withIsolation;
+
+    /**
+     * 租户列识别，逗号分隔。
+     */
+    @Parameter(property = "data.isolation.tenantColumns")
+    private String tenantColumns;
+
+    /**
+     * 即使命中租户列也排除的表，逗号分隔。
+     */
+    @Parameter(property = "data.isolation.excludeTables")
+    private String excludeTables;
 
     /**
      * 控制台输入扫描器，用于交互式参数输入
@@ -215,7 +245,7 @@ public class BootstrapMojo extends AbstractMojo {
                 getLog().info(String.format(Constants.LOG_FORMAT, "Group ID", groupId));
                 getLog().info(String.format(Constants.LOG_FORMAT, "Artifact ID", projectName));
                 getLog().info(String.format(Constants.LOG_FORMAT, "Version", version));
-                getLog().info(String.format(Constants.LOG_FORMAT, "Base Package", basePackage));
+                getLog().info(String.format(Constants.LOG_FORMAT, "Base Package", resolveBasePackage()));
                 getLog().info(String.format(Constants.LOG_FORMAT, "Description", Objects.toString(this.description, "")));
                 getLog().info(Constants.HORIZONTAL_LINE);
                 getLog().info("");
@@ -225,13 +255,16 @@ public class BootstrapMojo extends AbstractMojo {
                 getLog().info("====== Code Generation Configuration =====");
                 if (!generateSkeleton) {
                     getLog().info(String.format(Constants.LOG_FORMAT, "Artifact ID", project.getArtifactId()));
-                    getLog().info(String.format(Constants.LOG_FORMAT, "Base Package", basePackage));
+                    getLog().info(String.format(Constants.LOG_FORMAT, "Base Package", resolveBasePackage()));
                 }
                 getLog().info(String.format(Constants.LOG_FORMAT, "Database URL", url));
                 getLog().info(String.format(Constants.LOG_FORMAT, "Driver Class", driver));
                 getLog().info(String.format(Constants.LOG_FORMAT, "Database User", username));
                 getLog().info(String.format(Constants.LOG_FORMAT, "Table Names", tables));
                 getLog().info(String.format(Constants.LOG_FORMAT, "Overwrite Files", Boolean.TRUE.equals(this.overwrite)));
+                getLog().info(String.format(Constants.LOG_FORMAT, "Isolation Codegen", resolveWithIsolation()));
+                getLog().info(String.format(Constants.LOG_FORMAT, "Tenant Columns", resolveTenantColumns()));
+                getLog().info(String.format(Constants.LOG_FORMAT, "Exclude Tables", resolveExcludeTables()));
                 getLog().info(Constants.HORIZONTAL_LINE);
                 getLog().info("");
             }
@@ -243,7 +276,7 @@ public class BootstrapMojo extends AbstractMojo {
                         groupId,
                         projectName,
                         Objects.toString(version, Constants.PROJECT_VERSION),
-                        basePackage,
+                        resolveBasePackage(),
                         Objects.toString(description, "")
                 )).generate();
                 getLog().info(">>> Skeleton generation completed.");
@@ -254,7 +287,7 @@ public class BootstrapMojo extends AbstractMojo {
                 getLog().info(">>> Starting foundry generation...");
                 FoundryConfig config = new FoundryConfig(
                         generateSkeleton ? projectName : project.getArtifactId(),
-                        basePackage,
+                        resolveBasePackage(),
                         url,
                         driver,
                         username,
@@ -264,6 +297,9 @@ public class BootstrapMojo extends AbstractMojo {
                 config.setStepIn(!generateSkeleton);
                 config.setTables(this.tables);
                 config.setOverwrite(Boolean.TRUE.equals(this.getOverwrite()));
+                config.setWithIsolation(resolveWithIsolation());
+                config.setTenantColumns(resolveTenantColumns());
+                config.setExcludeTables(resolveExcludeTables());
                 new FoundryGenerator(getLog(), config).generate();
                 getLog().info(">>> Foundry generation completed.");
             }
@@ -356,7 +392,7 @@ public class BootstrapMojo extends AbstractMojo {
             throw new MojoExecutionException("The artifactId is not configured. Please check the configuration file or command-line parameters");
         }
 
-        if (Strings.isBlank(this.basePackage)) {
+        if (Strings.isBlank(resolveBasePackage())) {
             throw new MojoExecutionException("The base package name is not configured. Please check the configuration file or command-line parameters");
         }
     }
@@ -370,7 +406,8 @@ public class BootstrapMojo extends AbstractMojo {
      * <p><b>配置文件参数映射：</b></p>
      * <ul>
      *     <li>{@code archetype.artifactId} → {@code projectName}</li>
-     *     <li>{@code archetype.package} → {@code basePackage}</li>
+     *     <li>{@code project.basePackage} → {@code projectBasePackage}</li>
+     *     <li>{@code archetype.package} → {@code basePackage}（已废弃，仅作回退兼容）</li>
      *     <li>{@code database.url} → {@code url}</li>
      *     <li>{@code database.driver} → {@code driver}</li>
      *     <li>{@code database.username} → {@code username}</li>
@@ -395,8 +432,12 @@ public class BootstrapMojo extends AbstractMojo {
             props.load(fis);
 
             // 从配置文件加载数据库配置（如果未通过参数指定）
-            if (Strings.isBlank(this.basePackage)) {
-                this.basePackage = props.getProperty("archetype.package");
+            if (Strings.isBlank(this.projectBasePackage) && Strings.isBlank(this.basePackage)) {
+                String packageFromFile = props.getProperty("project.basePackage");
+                if (Strings.isBlank(packageFromFile)) {
+                    packageFromFile = props.getProperty("archetype.package");
+                }
+                this.basePackage = packageFromFile;
             }
 
             if (Strings.isBlank(this.url)) {
@@ -424,6 +465,21 @@ public class BootstrapMojo extends AbstractMojo {
                 this.overwrite = "true".equalsIgnoreCase(ow);
             }
 
+            if (Objects.isNull(this.withIsolation)) {
+                String isolation = props.getProperty("data.isolation.withIsolation");
+                if (Strings.isNotBlank(isolation)) {
+                    this.withIsolation = "true".equalsIgnoreCase(isolation.trim());
+                }
+            }
+
+            if (Strings.isBlank(this.tenantColumns)) {
+                this.tenantColumns = props.getProperty("data.isolation.tenantColumns");
+            }
+
+            if (Strings.isBlank(this.excludeTables)) {
+                this.excludeTables = props.getProperty("data.isolation.excludeTables");
+            }
+
             return true;
         }
     }
@@ -445,7 +501,7 @@ public class BootstrapMojo extends AbstractMojo {
      * @throws MojoExecutionException 当任何必填参数未配置时抛出，包含具体的错误信息
      */
     private void validateFoundryConfig() throws MojoExecutionException {
-        if (Strings.isBlank(this.basePackage)) {
+        if (Strings.isBlank(resolveBasePackage())) {
             throw new MojoExecutionException("The base package name is not configured. Please check the configuration file or command-line parameters");
         }
 
@@ -650,5 +706,27 @@ public class BootstrapMojo extends AbstractMojo {
                 }
             }
         }
+    }
+
+    String resolveBasePackage() {
+        if (Strings.isNotBlank(projectBasePackage)) {
+            return projectBasePackage.trim();
+        }
+        if (Strings.isNotBlank(basePackage)) {
+            return basePackage.trim();
+        }
+        return null;
+    }
+
+    boolean resolveWithIsolation() {
+        return !Boolean.FALSE.equals(withIsolation);
+    }
+
+    String resolveTenantColumns() {
+        return Strings.isBlank(tenantColumns) ? "organ_id" : tenantColumns.trim();
+    }
+
+    String resolveExcludeTables() {
+        return Strings.isBlank(excludeTables) ? "" : excludeTables.trim();
     }
 }

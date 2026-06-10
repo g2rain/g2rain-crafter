@@ -12,7 +12,6 @@
     </parent>
 
     <artifactId>${projectName}-biz</artifactId>
-    <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <name>${projectName}-biz</name>
@@ -24,15 +23,40 @@
         <dependency>
             <groupId>${groupId}</groupId>
             <artifactId>${projectName}-api</artifactId>
-            <version>1.0.0</version>
+            <version>${"$"}{project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.g2rain</groupId>
-            <artifactId>g2rain-starter-mybatis-pagination</artifactId>
+            <artifactId>g2rain-starter-aegis-core</artifactId>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>com.g2rain</groupId>
+            <artifactId>g2rain-starter-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.g2rain</groupId>
+            <artifactId>g2rain-starter-mybatis-extensions</artifactId>
         </dependency>
         <dependency>
             <groupId>com.mysql</groupId>

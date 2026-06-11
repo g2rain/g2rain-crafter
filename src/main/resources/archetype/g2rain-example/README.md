@@ -14,7 +14,7 @@
 
 ```properties
 # 项目配置
-archetype.package=com.g2rain.demo
+project.basePackage=com.g2rain.demo
 # 数据库配置
 database.url=jdbc:mysql://localhost:3306/g2rain-demo?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
 database.driver=com.mysql.cj.jdbc.Driver
@@ -25,6 +25,8 @@ database.tables=user,product,trade
 # 文件覆盖控制
 tables.overwrite=false
 ```
+
+> 请使用 `project.basePackage`。`archetype.package` 已废弃，旧项目配置文件仍可回退读取。
 
 > ⚠️ 必须放置在项目根目录，并确保数据库信息正确。
 
@@ -41,7 +43,7 @@ tables.overwrite=false
         <plugin>
             <groupId>com.g2rain</groupId>
             <artifactId>g2rain-crafter</artifactId>
-            <version>1.0.6</version>
+            <version>1.0.7</version>
             <configuration>
                 <phase>foundry</phase>
                 <!-- 可选：全局默认配置 -->
@@ -78,7 +80,7 @@ tables.overwrite=false
 
 ```bash
 # 需要在项目根目录执行, 但是这种方式其实是项目没有安装插件, 直接运行即可令; 如果安装了插件默认会使用插件的配置文件
-mvn com.g2rain:g2rain-crafter:1.0.6:bootstrap -Dphase=foundry
+mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap -Dphase=foundry
 ```
 
 > ⚠️ 命令必须在项目根目录执行。

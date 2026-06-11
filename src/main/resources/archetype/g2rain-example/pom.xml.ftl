@@ -34,13 +34,21 @@
             后续如果升级spring boot 版本, 酌情是否删掉这个属性
         -->
         <jackson-bom.version>3.1.1</jackson-bom.version>
+        <spring.cloud.version>2025.1.1</spring.cloud.version>
+        <spring.alibaba.nacos.version>2025.1.0.0</spring.alibaba.nacos.version>
+        <commons.fileupload.version>1.6.0</commons.fileupload.version>
         <mybatis.version>4.0.1</mybatis.version>
         <mysql.version>9.6.0</mysql.version>
         <mapstruct.version>1.6.3</mapstruct.version>
-        <g2rain.common.version>1.0.4</g2rain.common.version>
-        <g2rain.starter.mybatis.pagination.version>1.0.4</g2rain.starter.mybatis.pagination.version>
-        <g2rain.crafter.version>1.0.6</g2rain.crafter.version>
+        <g2rain.common.version>1.0.6</g2rain.common.version>
+        <g2rain.aegis.core.version>1.0.3</g2rain.aegis.core.version>
+        <g2rain.data.redis.version>1.0.3</g2rain.data.redis.version>
+        <g2rain-starter-mybatis-extensions.version>1.0.3</g2rain-starter-mybatis-extensions.version>
+        <g2rain.starter.spring.doc.version>1.0.3</g2rain.starter.spring.doc.version>
+        <g2rain.crafter.version>1.0.7</g2rain.crafter.version>
+        <g2rain.generator.version>1.0.6</g2rain.generator.version>
         <flatten.maven.plugin.version>1.7.3</flatten.maven.plugin.version>
+        <jib.maven.plugin.version>3.5.1</jib.maven.plugin.version>
         <maven.source.plugin.version>3.4.0</maven.source.plugin.version>
         <maven.compiler.release>25</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -48,6 +56,25 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${"$"}{spring.cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${"$"}{spring.alibaba.nacos.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>commons-fileupload</groupId>
+                <artifactId>commons-fileupload</artifactId>
+                <version>${"$"}{commons.fileupload.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
                 <artifactId>mybatis-spring-boot-starter</artifactId>
@@ -57,11 +84,6 @@
                 <groupId>com.mysql</groupId>
                 <artifactId>mysql-connector-j</artifactId>
                 <version>${"$"}{mysql.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.g2rain</groupId>
-                <artifactId>g2rain-starter-mybatis-pagination</artifactId>
-                <version>${"$"}{g2rain.starter.mybatis.pagination.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.mapstruct</groupId>
@@ -77,6 +99,27 @@
                 <groupId>com.g2rain</groupId>
                 <artifactId>g2rain-common</artifactId>
                 <version>${"$"}{g2rain.common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.g2rain</groupId>
+                <artifactId>g2rain-starter-aegis-core</artifactId>
+                <version>${"$"}{g2rain.aegis.core.version}</version>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>com.g2rain</groupId>
+                <artifactId>g2rain-starter-data-redis</artifactId>
+                <version>${"$"}{g2rain.data.redis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.g2rain</groupId>
+                <artifactId>g2rain-starter-mybatis-extensions</artifactId>
+                <version>${"$"}{g2rain-starter-mybatis-extensions.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.g2rain</groupId>
+                <artifactId>g2rain-starter-spring-doc</artifactId>
+                <version>${"$"}{g2rain.starter.spring.doc.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -110,6 +153,23 @@
                         <!-- 可选：全局默认配置 -->
                         <configFile>${"$"}{project.basedir}/codegen.properties</configFile>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>com.g2rain</groupId>
+                    <artifactId>g2rain-generator-maven-plugin</artifactId>
+                    <version>${"$"}{g2rain.generator.version}</version>
+                    <configuration>
+                        <configFile>${"$"}{project.basedir}/codegen.properties</configFile>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>generate-sources</id>
+                            <phase>none</phase>
+                            <goals>
+                                <goal>generate</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -187,6 +247,11 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.g2rain</groupId>
+                <artifactId>g2rain-generator-maven-plugin</artifactId>
+                <inherited>false</inherited>
             </plugin>
         </plugins>
     </build>

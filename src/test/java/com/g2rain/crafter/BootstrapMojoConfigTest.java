@@ -20,8 +20,7 @@ public class BootstrapMojoConfigTest {
     @Test
     void loadFoundryConfigFileReadsIsolationSettings() throws Exception {
         BootstrapMojo mojo = createMojoWithConfig("""
-            project.basePackage=com.demo.app
-            archetype.package=com.legacy.app
+            archetype.package=com.demo.app
             database.url=jdbc:mysql://localhost:3306/demo
             database.driver=com.mysql.cj.jdbc.Driver
             database.username=root
@@ -32,12 +31,12 @@ public class BootstrapMojoConfigTest {
             data.isolation.excludeTables=article
             """);
 
-        assertEquals("com.demo.app", mojo.resolveBasePackage());
+        assertEquals("com.demo.app", mojo.getBasePackage());
         assertFalse(mojo.resolveWithIsolation());
         assertEquals("tenant_id,organ_id", mojo.resolveTenantColumns());
         assertEquals("article", mojo.resolveExcludeTables());
 
-        FoundryConfig config = new FoundryConfig("demo", mojo.resolveBasePackage(),
+        FoundryConfig config = new FoundryConfig("demo", mojo.getBasePackage(),
             "jdbc:mysql://localhost:3306/demo", "com.mysql.cj.jdbc.Driver", "root", "pwd");
         config.setWithIsolation(mojo.resolveWithIsolation());
         config.setTenantColumns(mojo.resolveTenantColumns());
@@ -49,23 +48,9 @@ public class BootstrapMojoConfigTest {
     }
 
     @Test
-    void projectBasePackageFromFileFallsBackToDeprecatedArchetypePackage() throws Exception {
-        BootstrapMojo mojo = createMojoWithConfig("""
-            archetype.package=com.fallback.app
-            database.url=jdbc:mysql://localhost:3306/demo
-            database.driver=com.mysql.cj.jdbc.Driver
-            database.username=root
-            database.password=pwd
-            database.tables=user
-            """);
-
-        assertEquals("com.fallback.app", mojo.resolveBasePackage());
-    }
-
-    @Test
     void cliParametersTakePriorityOverCodegenProperties() throws Exception {
         BootstrapMojo mojo = createMojoWithConfig("""
-            project.basePackage=com.from.file
+            archetype.package=com.from.file
             database.url=jdbc:mysql://localhost:3306/demo
             database.driver=com.mysql.cj.jdbc.Driver
             database.username=root
@@ -76,12 +61,12 @@ public class BootstrapMojoConfigTest {
             data.isolation.excludeTables=article
             """);
 
-        setField(mojo, "projectBasePackage", "com.from.cli");
+        setField(mojo, "basePackage", "com.from.cli");
         setField(mojo, "withIsolation", Boolean.TRUE);
         setField(mojo, "tenantColumns", "organ_id");
         setField(mojo, "excludeTables", "dict_type");
 
-        assertEquals("com.from.cli", mojo.resolveBasePackage());
+        assertEquals("com.from.cli", mojo.getBasePackage());
         assertTrue(mojo.resolveWithIsolation());
         assertEquals("organ_id", mojo.resolveTenantColumns());
         assertEquals("dict_type", mojo.resolveExcludeTables());

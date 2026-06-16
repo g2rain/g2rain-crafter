@@ -46,7 +46,6 @@
         <g2rain-starter-mybatis-extensions.version>1.0.3</g2rain-starter-mybatis-extensions.version>
         <g2rain.starter.spring.doc.version>1.0.3</g2rain.starter.spring.doc.version>
         <g2rain.crafter.version>1.0.7</g2rain.crafter.version>
-        <g2rain.generator.version>1.0.6</g2rain.generator.version>
         <flatten.maven.plugin.version>1.7.3</flatten.maven.plugin.version>
         <jib.maven.plugin.version>3.5.1</jib.maven.plugin.version>
         <maven.source.plugin.version>3.4.0</maven.source.plugin.version>
@@ -154,23 +153,6 @@
                         <configFile>${"$"}{project.basedir}/codegen.properties</configFile>
                     </configuration>
                 </plugin>
-                <plugin>
-                    <groupId>com.g2rain</groupId>
-                    <artifactId>g2rain-generator-maven-plugin</artifactId>
-                    <version>${"$"}{g2rain.generator.version}</version>
-                    <configuration>
-                        <configFile>${"$"}{project.basedir}/codegen.properties</configFile>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>generate-sources</id>
-                            <phase>none</phase>
-                            <goals>
-                                <goal>generate</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
             </plugins>
         </pluginManagement>
 
@@ -247,11 +229,6 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>com.g2rain</groupId>
-                <artifactId>g2rain-generator-maven-plugin</artifactId>
-                <inherited>false</inherited>
             </plugin>
         </plugins>
     </build>

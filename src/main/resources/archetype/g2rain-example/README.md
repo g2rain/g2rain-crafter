@@ -14,7 +14,7 @@
 
 ```properties
 # 项目配置
-project.basePackage=com.g2rain.demo
+archetype.package=com.g2rain.demo
 # 数据库配置
 database.url=jdbc:mysql://localhost:3306/g2rain-demo?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
 database.driver=com.mysql.cj.jdbc.Driver
@@ -25,8 +25,6 @@ database.tables=user,product,trade
 # 文件覆盖控制
 tables.overwrite=false
 ```
-
-> 请使用 `project.basePackage`。`archetype.package` 已废弃，旧项目配置文件仍可回退读取。
 
 > ⚠️ 必须放置在项目根目录，并确保数据库信息正确。
 

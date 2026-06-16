@@ -1,49 +1,49 @@
 # =============================================
-# G2Rain Crafter \u4EE3\u7801\u751F\u6210\u914D\u7F6E\u6587\u4EF6
+# G2Rain Crafter 代码生成配置文件
 # =============================================
-# \u9879\u76EE\u914D\u7F6E
+# 项目配置
 # =============================================
-# Java \u57FA\u7840\u5305\u540D
-# \u6240\u6709\u751F\u6210\u7684 Java \u7C7B\u5C06\u57FA\u4E8E\u6B64\u5305\u540D\u521B\u5EFA\u5B50\u5305\u7ED3\u6784
-# \u793A\u4F8B\uFF1Acom.g2rain.demo \u4F1A\u751F\u6210 com.g2rain.demo.controller, com.g2rain.demo.service \u7B49\u5305
-project.basePackage=${package}
-# \u6570\u636E\u5E93\u8FDE\u63A5\u914D\u7F6E
+# Java 基础包名
+# 所有生成的 Java 类将基于此包名创建子包结构
+# 示例：com.g2rain.demo 会生成 com.g2rain.demo.controller, com.g2rain.demo.service 等包
+archetype.package=${package}
+# 数据库连接配置
 # =============================================
-# \u6570\u636E\u5E93\u8FDE\u63A5 URL
-# \u683C\u5F0F\uFF1Ajdbc:mysql://\u4E3B\u673A:\u7AEF\u53E3/\u6570\u636E\u5E93\u540D?\u8FDE\u63A5\u53C2\u6570
-# \u652F\u6301 MySQL \u7B49\u6570\u636E\u5E93
+# 数据库连接 URL
+# 格式：jdbc:mysql://主机:端口/数据库名?连接参数
+# 支持 MySQL 等数据库
 database.url=jdbc:mysql://localhost:3306/${projectName}?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
-# \u6570\u636E\u5E93\u9A71\u52A8\u7C7B\u540D
-# MySQL 8.0+ \u63A8\u8350\u4F7F\u7528 com.mysql.cj.jdbc.Driver
+# 数据库驱动类名
+# MySQL 8.0+ 推荐使用 com.mysql.cj.jdbc.Driver
 database.driver=com.mysql.cj.jdbc.Driver
-# \u6570\u636E\u5E93\u7528\u6237\u540D
-# \u9700\u8981\u5177\u6709\u8BFB\u53D6\u8868\u7ED3\u6784\u6743\u9650\u7684\u6570\u636E\u5E93\u7528\u6237
+# 数据库用户名
+# 需要具有读取表结构权限的数据库用户
 database.username=root
-# \u4EE3\u7801\u751F\u6210\u914D\u7F6E
+# 代码生成配置
 # =============================================
-# \u6570\u636E\u5E93\u5BC6\u7801
-# \u5BF9\u5E94\u7528\u6237\u540D\u7684\u6570\u636E\u5E93\u8BBF\u95EE\u5BC6\u7801
+# 数据库密码
+# 对应用户名数据库访问密码
 database.password=root123456
-# \u5F85\u751F\u6210\u7684\u6570\u636E\u5E93\u8868\u540D\u5217\u8868
-# \u652F\u6301\u591A\u8868\u751F\u6210\uFF0C\u8868\u540D\u4E4B\u95F4\u7528\u82F1\u6587\u9017\u53F7\u5206\u9694
-# \u8868\u540D\u9700\u4E0E\u6570\u636E\u5E93\u4E2D\u5B9E\u9645\u8868\u540D\u5B8C\u5168\u4E00\u81F4\uFF0C\u533A\u5206\u5927\u5C0F\u5199
+# 待生成的数据库表名列表
+# 支持多表生成，表名之间用英文逗号分隔
+# 表名需与数据库中实际表名完全一致，区分大小写
 database.tables=user,product,trade
 
-# \u6587\u4EF6\u8986\u76D6\u63A7\u5236
-# true - \u8986\u76D6\u5DF2\u5B58\u5728\u7684\u6587\u4EF6
-# false - \u8DF3\u8FC7\u5DF2\u5B58\u5728\u7684\u6587\u4EF6\uFF08\u63A8\u8350\u7528\u4E8E\u751F\u4EA7\u73AF\u5883\uFF09
+# 文件覆盖控制
+# true - 覆盖已存在的文件
+# false - 跳过已存在的文件（推荐用于生产环境）
 tables.overwrite=false
 
-# \u6570\u636E\u9694\u79BB codegen \u914D\u7F6E
+# 数据隔离 codegen 配置
 # =============================================
-# \u662F\u5426\u4E3A\u79DF\u6237\u8868\u751F\u6210\u9694\u79BB\u76F8\u5173\u4EE3\u7801
-# true - \u751F\u6210 @DataIsolation \u53CA WithoutIsolation \u65B9\u6CD5\uFF08\u9ED8\u8BA4\uFF09
-# false - \u4E0D\u751F\u6210\u9694\u79BB\u76F8\u5173\u4EE3\u7801
-# \u8FD0\u884C\u65F6\u662F\u5426\u6CE8\u5165\u79DF\u6237\u6761\u4EF6\u7531 application.yml \u7684 g2rain.data.isolation.enabled \u63A7\u5236
+# 是否为租户表生成隔离相关代码
+# true - 生成 @DataIsolation 及 WithoutIsolation 方法（默认）
+# false - 不生成隔离相关代码
+# 运行时是否注入租户条件由 application.yml 的 g2rain.data.isolation.enabled 控制
 data.isolation.withIsolation=true
-# \u79DF\u6237\u5217\u8BC6\u522B\uFF0C\u9017\u53F7\u5206\u9694
-# \u8868\u542B\u4EE5\u4E0B\u4EFB\u4E00\u5217\u65F6\u89C6\u4E3A\u79DF\u6237\u8868\uFF0C\u9ED8\u8BA4 organ_id
+# 租户列识别，逗号分隔
+# 表含以下任一列时视为租户表，默认 organ_id
 data.isolation.tenantColumns=organ_id
-# \u5373\u4F7F\u547D\u4E2D\u79DF\u6237\u5217\u4E5F\u6392\u9664\u7684\u8868\uFF0C\u9017\u53F7\u5206\u9694
-# \u793A\u4F8B\uFF1Adict_type,config\uFF08\u7559\u7A7A\u8868\u793A\u4E0D\u6392\u9664\uFF09
+# 即使命中租户列也排除的表，逗号分隔
+# 示例：dict_type,config（留空表示不排除）
 data.isolation.excludeTables=

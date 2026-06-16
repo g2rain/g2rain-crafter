@@ -97,7 +97,7 @@ g2rain-crafter 是一个企业级 Maven 插件，用于快速生成项目骨架�
 
 | 配置键 | 说明 | 示例 |
 |--------|------|------|
-| `project.basePackage` | Java 基础包名（必填） | `com.g2rain.demo` |
+| `archetype.package` | Java 基础包名（必填） | `com.g2rain.demo` |
 | `database.url` | JDBC 连接 URL（必填） | `jdbc:mysql://localhost:3306/g2rain-demo?...` |
 | `database.driver` | JDBC 驱动类（必填） | `com.mysql.cj.jdbc.Driver` |
 | `database.username` | 数据库用户名（必填） | `root` |
@@ -116,7 +116,7 @@ g2rain-crafter 是一个企业级 Maven 插件，用于快速生成项目骨架�
 # =============================================
 
 # 项目配置
-project.basePackage=com.g2rain.demo
+archetype.package=com.g2rain.demo
 
 # 数据库连接配置
 database.url=jdbc:mysql://localhost:3306/g2rain-demo?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
@@ -136,7 +136,7 @@ data.isolation.tenantColumns=organ_id
 data.isolation.excludeTables=
 ```
 
-请使用 `project.basePackage` 配置 Java 基础包名。`archetype.package` 已废弃，旧项目配置文件仍可回退读取。
+请使用 `archetype.package` 配置 Java 基础包名，与 skeleton 阶段的 `-Darchetype.package` 保持一致。
 
 > 配置文件需放在**项目根目录**（或与 `-Dconfig.file` 指定的路径一致）。foundry 阶段会优先读取该文件；命令行参数优先级高于配置文件，配置文件高于交互式输入。
 
@@ -193,7 +193,7 @@ mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap
 mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap -Dphase=skeleton
 ```
 
-生成内容包括：Parent POM、API/BIZ/STARTUP 子模块 POM、启动类、基础配置类，以及根目录 `codegen.properties` 模板（已预填 `project.basePackage` 与默认数据库 URL）。
+生成内容包括：Parent POM、API/BIZ/STARTUP 子模块 POM、启动类、基础配置类，以及根目录 `codegen.properties` 模板（已预填 `archetype.package` 与默认数据库 URL）。
 
 #### 仅生成业务代码
 
@@ -224,7 +224,7 @@ mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap \
   -Darchetype.groupId=com.g2rain \
   -Darchetype.artifactId=g2rain-demo \
   -Darchetype.version=1.0.0 \
-  -Dproject.basePackage=com.g2rain.demo \
+  -Darchetype.package=com.g2rain.demo \
   -Darchetype.description="示例项目" \
   -Ddatabase.url=jdbc:mysql://localhost:3306/g2rain-demo?useSSL=false&serverTimezone=UTC \
   -Ddatabase.driver=com.mysql.cj.jdbc.Driver \
@@ -243,7 +243,7 @@ mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap -Dphase=skeleton \
   -Darchetype.groupId=com.g2rain \
   -Darchetype.artifactId=g2rain-demo \
   -Darchetype.version=1.0.0 \
-  -Dproject.basePackage=com.g2rain.demo \
+  -Darchetype.package=com.g2rain.demo \
   -Darchetype.description="示例项目"
 ```
 
@@ -256,7 +256,7 @@ mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap -Dphase=foundry \
   -Dconfig.file=./codegen.properties
 ```
 
-> ⚡ **注意**：非交互式模式下，skeleton 必填项为 `archetype.groupId`、`archetype.artifactId`、`project.basePackage`；foundry 必填项为 `database.url`、`database.driver`、`database.username`、`database.tables`。任一缺失将触发交互式补全。
+> ⚡ **注意**：非交互式模式下，skeleton 必填项为 `archetype.groupId`、`archetype.artifactId`、`archetype.package`；foundry 必填项为 `database.url`、`database.driver`、`database.username`、`database.tables`。任一缺失将触发交互式补全。
 
 ---
 
@@ -277,7 +277,7 @@ mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap -Dphase=foundry \
 | `-Darchetype.groupId` | Maven Group ID | — | skeleton |
 | `-Darchetype.artifactId` | 项目 Artifact ID（目录名） | — | skeleton |
 | `-Darchetype.version` | 项目版本，默认 `1.0.0` | — | skeleton |
-| `-Dproject.basePackage` | Java 基础包名 | `project.basePackage` | skeleton |
+| `-Darchetype.package` | Java 基础包名 | `archetype.package` | skeleton / foundry |
 | `-Darchetype.description` | 项目描述 | — | 可选 |
 | `-Ddatabase.url` | JDBC URL | `database.url` | foundry |
 | `-Ddatabase.driver` | JDBC 驱动类 | `database.driver` | foundry |
@@ -289,8 +289,6 @@ mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap -Dphase=foundry \
 | `-Ddata.isolation.withIsolation` | 是否生成数据隔离代码 | `data.isolation.withIsolation` | 可选 |
 | `-Ddata.isolation.tenantColumns` | 租户列识别 | `data.isolation.tenantColumns` | 可选 |
 | `-Ddata.isolation.excludeTables` | 排除表（即使含租户列） | `data.isolation.excludeTables` | 可选 |
-
-> `-Darchetype.package` 已废弃，请使用 `-Dproject.basePackage`。
 
 ---
 

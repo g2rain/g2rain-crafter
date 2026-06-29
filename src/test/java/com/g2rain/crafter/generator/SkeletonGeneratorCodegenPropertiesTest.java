@@ -44,8 +44,8 @@ public class SkeletonGeneratorCodegenPropertiesTest {
         String content = Files.readString(codegen);
         assertFalse(content.contains("${package}"), "package placeholder should be rendered");
         assertFalse(content.contains("${projectName}"), "projectName placeholder should be rendered");
-        assertTrue(content.contains("project.basePackage=com.test.demo"));
-        assertFalse(content.contains("archetype.package="), "new projects should not emit deprecated archetype.package");
+        assertTrue(content.contains("archetype.package=com.test.demo"));
+        assertFalse(content.contains("project.basePackage="));
         assertTrue(content.contains("jdbc:mysql://localhost:3306/" + PROJECT_NAME));
     }
 

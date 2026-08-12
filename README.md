@@ -1,239 +1,192 @@
+﻿<p align="center">
+  <img src="https://github.com/g2rain.png" alt="G2Rain" width="180" />
+</p>
+
 # g2rain-crafter
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.g2rain/g2rain-crafter.svg)](https://search.maven.org/artifact/com.g2rain/g2rain-crafter)
-[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
-[![Java Version](https://img.shields.io/badge/Java-25+-orange.svg)](https://openjdk.java.net/)
-[![Build Status](https://img.shields.io/badge/build-Maven-C71A36?logo=apachemaven&logoColor=white)](https://github.com/g2rain/g2rain-crafter)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+[![Java](https://img.shields.io/badge/Java-25-437291?logo=openjdk&logoColor=white)](https://openjdk.org/)
+[![Maven](https://img.shields.io/badge/build-Maven-C71A36?logo=apachemaven&logoColor=white)](https://maven.apache.org/)
 
-## 1. 徽标与状态标识
-- 当前版本通过 `Maven Central` 发布
-- 当前运行时要求 `Java 25+`
-- 当前构建方式以 `Maven` 为准
-- 当前开源许可证为 `Apache 2.0`
+下一代AI软件开发范式，AI原生Agent平台，开源的企业级SaaS底座。
 
-## 2. 项目简介
-`g2rain-crafter` 是 G2rain 平台面向 Java 后端项目的 Maven bootstrap 插件，用于快速生成多模块项目骨架，并在需要时继续委托下游生成器完成数据库表到业务代码骨架的输出。它的定位不是单纯 CRUD 生成器，而是“项目初始化 + 生成编排”的工程化工具。
+g2rain 后端代码生成与 Maven 插件，面向后端工程提供代码生成、工程约定落地与构建期自动化能力；作为平台后端研发支撑层被多个 g2rain 服务复用
 
-## 3. 平台定位
+[官网](https://www.g2rain.com) · [Issues](https://github.com/g2rain/g2rain/issues) · [Discussions](https://github.com/g2rain/g2rain/discussions)
 
-`g2rain-crafter` 位于 G2rain 平台工程化能力层，是平台 Java 项目从零初始化的重要入口。  
-它主要服务于需要快速搭建 `-api / -biz / -startup` 结构的新项目，以及需要在骨架建好后继续增量生成业务代码的团队。  
-它负责项目引导与阶段编排，具体的表到代码生成能力由 `g2rain-generator-maven-plugin` 承担。
+## 目录
 
-## 4. 核心能力
+- 项目简介
+- 平台定位
+- 业务域说明
+- 功能概览
+- 使用场景
+- 核心流程
+- 流程图
+- 技术栈
+- 环境要求
+- 快速开始
+- 构建与镜像
+- 使用示例
+- 安全说明
+- 与关联仓库的关系
+- 模块说明
+- 职责边界
+- 常见问题
+- 关联仓库
+- 参与贡献
+- 许可证
+- 联系我们
+- 致谢
 
-- Bootstrap Goal：提供 `bootstrap` 作为统一入口
-- 双阶段执行：支持 `skeleton`、`foundry` 与完整流程
-- Archetype 骨架生成：自动生成 Parent POM、模块 POM、启动类、基础配置与目录结构
-- Foundry 委托生成：复用下游生成器输出 DAO、PO、DTO、VO、Service、Controller、API、Mapper
-- 交互与非交互兼容：支持命令行、配置文件与控制台输入
-- 参数兼容迁移：支持 `project.basePackage` 并兼容旧的 `archetype.package`
+## 项目简介
 
-## 5. 技术栈
+g2rain 后端代码生成与 Maven 插件，面向后端工程提供代码生成、工程约定落地与构建期自动化能力；作为平台后端研发支撑层被多个 g2rain 服务复用
 
-- 语言与运行时：`Java 25`
-- 构建工具：`Maven`
-- 构件类型：`maven-plugin`
-- 核心依赖：`Maven Plugin API`、`g2rain-generator-maven-plugin`
-- 测试框架：`JUnit Jupiter`、`Mockito`
-- 发布工具：`maven-plugin-plugin`、`GPG`、`Central Publishing`
+## 平台定位
 
-## 6. 快速开始
-### 环境要求
+该仓库位于 g2rain 后端研发支撑层，为多个后端项目提供集成能力、工程化工具或共享扩展。
 
-- `JDK 25`
-- `Maven 3.9+`
-- 如果执行 `foundry`，需可访问目标数据库
+## 业务域说明
 
-### 直接执行完整流程
+该仓库聚焦于 `后端项目初始化、工程模板装配与开发支撑`。
 
-```bash
-mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap
+## 功能概览
+
+| 能力 | 说明 |
+| --- | --- |
+| 构建期生成 | 通过 Maven 插件目标在构建或开发阶段生成代码、配置或工程骨架。 |
+| 工程规范落地 | 将平台后端代码结构、命名约定和模板规则固化到插件流程中。 |
+| 项目初始化 | 面向新服务或工程模块生成初始结构，降低接入 g2rain 平台规范的成本。 |
+| 工程装配 | 围绕模板、依赖、配置和目录约定完成项目脚手架化装配。 |
+
+## 使用场景
+
+| 场景 | 说明 |
+| --- | --- |
+| 生成后端代码 | 当开发者需要根据模板或元数据生成 Controller、Service、DTO、实体或配置文件时使用。 |
+| 降低重复工程搭建 | 当新模块需要快速落地 g2rain 后端结构和命名规范时，通过 Maven 插件完成自动化生成。 |
+
+## 核心流程
+
+| 流程 | 关键步骤 | 代码线索 |
+| --- | --- | --- |
+| 代码生成流程 | 在业务工程配置 Maven 插件 → 执行插件目标或构建阶段 → 读取模板、元数据或用户参数 → 生成代码与配置文件 → 开发者在业务工程中继续扩展 | pom.xml、maven-plugin-plugin、Mojo、template/generator classes |
+
+## 流程图
+
+```mermaid
+flowchart TD
+  A[业务工程配置 Maven 插件] --> B[执行插件 Goal]
+  B --> C[读取参数/模板/元数据]
+  C --> D[生成代码或工程文件]
+  D --> E[写入目标模块]
+  E --> F[业务工程继续编译运行]
 ```
 
-### 仅生成项目骨架
+## 技术栈
 
-```bash
-mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap -Dphase=skeleton
-```
+| 类别 | 说明 |
+| --- | --- |
+| 运行时 | Java 25 |
+| 其他 | Lombok |
 
-### 仅生成业务代码
+## 环境要求
 
-```bash
-mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap -Dphase=foundry -Dconfig.file=./codegen.properties
-```
+- JDK 25+
+- Maven 3.9+
 
-### 常见非交互参数
+## 快速开始
 
-```bash
-mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap \
-  -Darchetype.groupId=com.g2rain \
-  -Darchetype.artifactId=g2rain-demo \
-  -Darchetype.version=1.0.0 \
-  -Dproject.basePackage=com.g2rain.demo \
-  -Darchetype.description="示例项目"
-```
+| 步骤 | 命令或位置 | 说明 |
+| --- | --- | --- |
+| 准备构建环境 | JDK 25+、Maven 3.9+ | 工具组件通常只需要 Java 与 Maven 构建环境。 |
+| 构建组件 | `mvn clean package` | 执行 Maven 构建，生成可发布或可本地安装的组件产物。 |
+| 本地安装 | `mvn clean install` | 安装到本地 Maven 仓库，便于业务工程试用插件目标。 |
 
-### Foundry 配置补充
+版本号以项目构建配置为准，当前识别为 `1.0.7`。
 
-当执行 `foundry` 阶段时，可通过 `codegen.properties` 配置：
+## 构建与镜像
 
-```properties
-project.basePackage=com.g2rain.demo
+| 目标 | 命令 | 产物 | 说明 |
+| --- | --- | --- | --- |
+| 组件产物 | `mvn clean package` | `g2rain-crafter-1.0.7.jar` | 执行 Maven 标准构建，生成可发布的 Maven 插件产物。 |
+| 本地 Maven 安装 | `mvn clean install` | `本地 Maven 仓库产物` | 安装到本地 Maven 仓库，便于业务工程本地验证插件目标。 |
 
-database.url=jdbc:mysql://localhost:3306/g2rain-demo?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
-database.driver=com.mysql.cj.jdbc.Driver
-database.username=root
-database.password=root123456
+## 使用示例
 
-database.tables=user,product,trade
-tables.overwrite=false
+| 示例 | 方式 | 内容 | 说明 |
+| --- | --- | --- | --- |
+| Maven 插件配置 | Maven | `<plugin><groupId>com.g2rain</groupId><artifactId>g2rain-crafter</artifactId><version>1.0.7</version></plugin>` | 在业务工程 pom.xml 的 plugins 中配置该 Maven 插件。 |
+| 执行插件目标 | Maven Goal | `mvn com.g2rain:g2rain-crafter:1.0.7:help` | 在业务工程中执行插件目标，触发代码生成或工程处理逻辑。 |
 
-data.isolation.withIsolation=true
-data.isolation.tenantColumns=organ_id
-data.isolation.excludeTables=
-```
+## 安全说明
 
-### 参数优先级
+| 主题 | 说明 |
+| --- | --- |
+| 依赖可信边界 | 作为平台共享组件或构建工具，应通过组织 Maven 仓库、版本锁定和发布流程控制依赖来源。 |
+| 生成文件审计 | 代码生成或项目初始化工具会写入工程文件，执行前应确认模板来源、输出目录和覆盖策略。 |
 
-- 命令行参数
-- 配置文件
-- 交互输入
+## 与关联仓库的关系
 
-### 本地构建
+本仓库位于 g2rain 后端研发支撑层，通过 Maven 插件目标和代码生成规则支撑后端工程创建与演进。
 
-```bash
-mvn clean install
-```
+## 模块说明
 
-### 本地测试
+| 模块 | 职责说明 | 代码线索 |
+| --- | --- | --- |
+| 插件 Goal | 暴露 Maven 插件执行入口，承载生成或工程处理动作。 | Mojo、maven-plugin-plugin、plugin descriptor |
+| 生成器核心 | 读取模板、参数或元数据并生成目标代码。 | generator、template、codegen classes |
 
-```bash
-mvn test
-```
+## 职责边界
 
-### 发布说明
+该仓库主要负责：
+- 负责提供后端项目初始化、模板装配和工程创建支撑
+- 负责降低新项目接入 g2rain 后端规范的成本
 
-- 正式版通过 `release.yml` 发布
-- 发布流程包含 source、javadoc、GPG 签名与 Central Publishing
+该仓库默认不负责：
+- 不负责生成项目后续的业务实现
+- 不替代项目团队对配置、依赖和部署策略的确认
 
-## 7. 项目结构
+## 常见问题
 
-```text
-g2rain-crafter/
-├── src/main/java/com/g2rain/crafter/
-│   ├── config/
-│   ├── generator/
-│   └── utils/
-├── src/main/resources/archetype/
-├── src/test/java/com/g2rain/crafter/
-├── .github/workflows/
-│   └── release.yml
-└── pom.xml
-```
+| 问题 | 可能原因 | 处理建议 |
+| --- | --- | --- |
+| 业务工程无法解析依赖 | 组件未发布到当前 Maven 仓库，或 groupId/artifactId/version 配置不一致。 | 检查 Maven 仓库地址、版本号和业务工程 dependencyManagement 配置。 |
+| 插件目标执行失败 | 插件参数、模板路径、输出目录或 Maven 生命周期配置不正确。 | 检查插件 goal、configuration、模板资源和构建日志。 |
 
-### 核心能力结构说明
+## 关联仓库
 
-#### 1. `BootstrapMojo`：双阶段编排入口
-- 解决问题：把项目骨架初始化和业务代码生成统一收敛到一个 Maven Goal 中
-- 核心逻辑：
-  - 根据 `phase` 决定执行 `skeleton`、`foundry` 或完整流程
-  - 负责命令行、配置文件、交互输入的参数收集
-  - 组装 `SkeletonConfig` 与 `FoundryConfig`
-- 典型用法：新项目初始化时直接跑完整流程；已有项目则只跑 `foundry`
+| 仓库 | 协作关系 |
+| --- | --- |
+| g2rain-common | 复用平台公共规范、通用模型、工具能力或基础依赖约束。 |
+| g2rain-generator-maven-plugin | 作为后端工程生成链路的一部分，协同完成代码生成或工程初始化。 |
+| g2rain-spring-boot-starter | 复用平台后端 Starter，获得统一自动配置、扩展点和后端集成能力。 |
 
-#### 2. `SkeletonGenerator`：archetype 骨架模板渲染器
-- 解决问题：快速生成符合平台规范的多模块空项目，避免人工搭目录和基础 POM
-- 核心逻辑：
-  - 遍历 `src/main/resources/archetype`
-  - 将模板项目名 `g2rain-example` 替换为真实项目名
-  - 将 `basePackage` 映射为 Java 目录结构
-  - 渲染 `.ftl` 并复制普通文件
-- 典型用法：生成 Parent POM、`-api` / `-biz` / `-startup` 模块、启动类和 `codegen.properties`
+## 参与贡献
 
-#### 3. `SkeletonConfig`：骨架数据模型
-- 解决问题：把骨架模板渲染所需的项目信息统一组织起来
-- 核心逻辑：
-  - 保存 `groupId`、`projectName`、`version`、`basePackage`、`description`
-  - 以 `toData()` 形式供模板直接使用
-- 典型用法：作为骨架模板的数据上下文，而不是在模板里拼接零散变量
+我们欢迎所有形式的贡献：Issue 反馈、文档改进、功能建议与代码提交。
 
-#### 4. `archetype/`：项目模板资产目录
-- 解决问题：把项目初始化规则固化成可维护模板，而不是硬编码在 Java 中
-- 核心逻辑：
-  - 提供根 `pom.xml.ftl`
-  - 提供模块 `pom.xml.ftl`
-  - 提供 `Application.java.ftl`、配置类模板、应用配置模板和 `codegen.properties.ftl`
-- 典型用法：调整项目初始化标准时，优先修改这里的模板资产
+推荐流程：
 
-#### 5. 与 `g2rain-generator-maven-plugin` 的协作边界
-- `g2rain-crafter` 负责项目初始化与阶段编排
-- `g2rain-generator-maven-plugin` 负责数据库表到业务代码生成
-- 二者关系是“上游引导器 + 下游生成器”，而不是重复实现
+1. Fork 本仓库。
+2. 创建特性分支：`git checkout -b feature/your-feature-name`。
+3. 提交更改：`git commit -m "Add some feature"`。
+4. 推送分支：`git push origin feature/your-feature-name`。
+5. 提交 Pull Request。
 
-### 接入建议与边界
-- 从零搭项目时优先使用完整流程
-- 已有项目需要按表增量生成时，只执行 `foundry`
-- 模板资产变化后，应同步检查生成结果是否仍符合团队规范
+代码贡献前请尽量补充必要的测试和文档，并确保构建、测试与静态检查通过。
 
-## 8. 常用命令
+## 许可证
 
-```bash
-mvn clean install
-mvn test
-mvn com.g2rain:g2rain-crafter:1.0.7:help
-mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap -Dphase=skeleton
-mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap -Dphase=foundry -Dconfig.file=./codegen.properties
-```
+本项目基于 [Apache 2.0许可证](https://github.com/g2rain/g2rain-common/blob/main/LICENSE) 开源。
 
-## 9. 质量与测试
-- 当前扫描到主源码文件 `4` 个，测试文件 `7` 个，archetype 文件 `17` 个
-- 已覆盖 bootstrap 配置解析、skeleton 生成器与 `codegen.properties` 渲染测试
-- `foundry` 具体表到代码逻辑主要由下游 `g2rain-generator-maven-plugin` 提供
-- 后续如调整 archetype 模板，建议同步补充模板输出相关测试
+## 联系我们
 
-## 10. 相关仓库
+- Issues: [GitHub Issues](https://github.com/g2rain/g2rain/issues)
+- 讨论: [GitHub Discussions](https://github.com/g2rain/g2rain/discussions)
+- 邮箱: g2rain_developer@163.com
 
-- `g2rain-generator-maven-plugin`
-- `g2rain-common`
-- `g2rain-spring-boot-starter`
-- `g2rain-app-cli`
-- `g2rain-app-template`
+## 致谢
 
-## 11. 使用建议
-
-- 适合作为平台 Java 新项目初始化的首选工具
-- 适合把项目结构标准化与业务代码生成分阶段执行
-- 使用前建议先明确项目名、基础包和数据库表范围
-- 如仅想生成业务代码，不必重新执行骨架阶段
-
-## 12. 贡献指南
-
-欢迎通过文档改进、Issue 反馈、测试补充、模板优化、功能增强等形式参与贡献。  
-建议流程：
-1. Fork 本仓库
-2. 创建特性分支
-3. 提交修改
-4. 推送分支
-5. 提交 Pull Request
-
-提交前请尽量确保：
-- 遵循现有技术栈与代码规范
-- 更新相关文档
-- 补充必要测试
-
-## 13. 许可证
-
-本项目基于 [Apache 2.0许可证](LICENSE) 开源。
-
-## 14. 联系我们
-
-- **站点**: https://www.g2rain.com/
-- **Issues**: [GitHub Issues](https://github.com/g2rain/g2rain/issues)
-- **讨论**: [GitHub Discussions](https://github.com/g2rain/g2rain/discussions)
-- **邮箱**: g2rain_developer@163.com
-
-## 15. 致谢
-
-感谢所有为这个项目做出贡献的开发者们。  
-如果这个项目对您有帮助，欢迎 Star 支持。
+感谢所有为 g2rain 项目提交 Issue、代码、文档、建议和使用反馈的开发者们！

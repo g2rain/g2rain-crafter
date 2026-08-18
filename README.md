@@ -208,13 +208,125 @@ flowchart TD
 
 ## 使用示例
 
-| 示例 | 方式 | 内容 | 说明 |
-| --- | --- | --- | --- |
-| 完整生成 | Maven Goal | `mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap -Darchetype.groupId=com.example -Darchetype.artifactId=demo-service -Darchetype.package=com.example.demo -Ddatabase.url=jdbc:mysql://localhost:3306/demo -Ddatabase.driver=com.mysql.cj.jdbc.Driver -Ddatabase.username=root -Ddatabase.tables=user` | 不指定 phase，先生成项目骨架，再为指定数据库表生成业务代码。 |
-| 只生成项目骨架 | Maven Goal | `mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap -Dphase=skeleton -Darchetype.groupId=com.example -Darchetype.artifactId=demo-service -Darchetype.package=com.example.demo` | 生成根 POM、API/Biz/Startup 模块、启动类和 codegen.properties。 |
-| 只生成业务代码 | Maven Goal | `mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap -Dphase=foundry -Dconfig.file=codegen.properties` | 必须在已有 Maven 项目的根目录执行，并从配置文件读取数据库与表参数。 |
-| 允许覆盖目标文件 | Maven 参数 | `-Dtables.overwrite=true` | 显式允许覆盖已有生成文件；默认 false，使用前应提交或备份当前修改。 |
-| 配置数据隔离代码生成 | Properties | `data.isolation.withIsolation=true; data.isolation.tenantColumns=organ_id; data.isolation.excludeTables=dict_type,config` | 识别租户表，并排除不应生成隔离代码的表。 |
+### 交互式完整生成
+
+在支持 System.console() 的真实终端中直接运行。插件先询问项目骨架参数，再询问数据库与代码生成参数，随后连续执行 skeleton 和 foundry。
+
+```console
+mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap
+Group ID [required]: com.example
+Artifact ID [required]: demo-service
+Version [optional, default 1.0.0]: 1.0.0
+Base Package [required]: com.example.demo
+Description [optional]: Demo service
+Database URL [required]: jdbc:mysql://localhost:3306/demo
+Driver Class [required]: com.mysql.cj.jdbc.Driver
+Username [required]: root
+Password [optional]: YOUR_PASSWORD
+Table Names [required]: user,product
+Overwrite existing files? (y/N, default N): n
+```
+
+### 交互式仅生成骨架
+
+只询问项目坐标、基础包和描述。版本直接回车时使用默认值 1.0.0。
+
+```console
+mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap -Dphase=skeleton
+Group ID [required]: com.example
+Artifact ID [required]: demo-service
+Version [optional, default 1.0.0]:
+Base Package [required]: com.example.demo
+Description [optional]: Demo service
+```
+
+### 交互式仅生成业务代码
+
+必须先进入包含 pom.xml 的现有项目根目录。密码可直接回车留空，覆盖选项支持 y/yes/true/1 与 n/no/false/0。
+
+```console
+mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap -Dphase=foundry
+Base Package [required]: com.example.demo
+Database URL [required]: jdbc:mysql://localhost:3306/demo
+Driver Class [required]: com.mysql.cj.jdbc.Driver
+Username [required]: root
+Password [optional]: YOUR_PASSWORD
+Table Names [required]: user,product
+Overwrite existing files? (y/N, default N): n
+```
+
+### 查看 bootstrap 参数
+
+查看 bootstrap Goal 的参数、类型和说明。
+
+```bash
+mvn com.g2rain:g2rain-crafter:1.0.7:help -Ddetail=true -Dgoal=bootstrap
+```
+
+### 完整生成
+
+不指定 phase，先生成项目骨架，再为指定数据库表生成业务代码。
+
+```bash
+mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap -Darchetype.groupId=com.example -Darchetype.artifactId=demo-service -Darchetype.version=1.0.0 -Darchetype.package=com.example.demo -Ddatabase.url=jdbc:mysql://localhost:3306/demo -Ddatabase.driver=com.mysql.cj.jdbc.Driver -Ddatabase.username=root -Ddatabase.password=YOUR_PASSWORD -Ddatabase.tables=user,product
+```
+
+### 只生成项目骨架
+
+生成根 POM、API/Biz/Startup 模块、启动类和 codegen.properties。
+
+```bash
+mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap -Dphase=skeleton -Darchetype.groupId=com.example -Darchetype.artifactId=demo-service -Darchetype.version=1.0.0 -Darchetype.package=com.example.demo -Darchetype.description=DemoService
+```
+
+### 使用配置文件生成业务代码
+
+必须在已有 Maven 项目的根目录执行，并从配置文件读取数据库与表参数。
+
+```bash
+mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap -Dphase=foundry -Dconfig.file=codegen.properties
+```
+
+### 命令行直接生成业务代码
+
+不读取配置文件，直接通过命令行提供 Foundry 所需参数。
+
+```bash
+mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap -Dphase=foundry -Darchetype.package=com.example.demo -Ddatabase.url=jdbc:mysql://localhost:3306/demo -Ddatabase.driver=com.mysql.cj.jdbc.Driver -Ddatabase.username=root -Ddatabase.password=YOUR_PASSWORD -Ddatabase.tables=user,product
+```
+
+### 覆盖已有生成文件
+
+显式允许覆盖已有生成文件；默认 false，使用前应提交或备份当前修改。
+
+```bash
+mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap -Dphase=foundry -Dconfig.file=codegen.properties -Dtables.overwrite=true
+```
+
+### 命令行配置数据隔离生成
+
+识别租户表，并排除不应生成隔离代码的表。
+
+```bash
+mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap -Dphase=foundry -Dconfig.file=codegen.properties -Ddata.isolation.withIsolation=true -Ddata.isolation.tenantColumns=organ_id,tenant_id -Ddata.isolation.excludeTables=dict_type,config
+```
+
+### codegen.properties 示例
+
+将配置保存到项目根目录，并使用 config.file 指向该文件。真实密码不要提交到版本库。
+
+```properties
+archetype.package=com.example.demo
+database.url=jdbc:mysql://localhost:3306/demo
+database.driver=com.mysql.cj.jdbc.Driver
+database.username=root
+database.password=YOUR_PASSWORD
+database.tables=user,product
+tables.overwrite=false
+data.isolation.withIsolation=true
+data.isolation.tenantColumns=organ_id
+data.isolation.excludeTables=dict_type,config
+```
 
 ## 安全说明
 

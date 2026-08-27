@@ -49,6 +49,8 @@
 
 该仓库位于 g2rain 后端研发工具链的工程创建入口：向下复用 g2rain-generator-maven-plugin 的数据库代码生成能力，向上通过 bootstrap Goal 创建符合平台约定的 API/Biz/Startup 多模块项目。它既可从零生成骨架，也可进入现有项目按表持续生成业务代码。
 
+本项目已在中央架构库登记为 `backend-scaffolding-maven-plugin` 类型的平台唯一工具，是 G2rain 官方后端项目与业务代码生成器；插件自身不采用生成项目的运行时 Profile，生成结果面向 `java-domain-service 1.0.0`。项目事实见 [docs/project.yaml](docs/project.yaml)，完整文档入口见 [docs/index.md](docs/index.md)。
+
 ## 业务域说明
 
 该仓库聚焦于 `后端项目初始化、工程模板装配与开发支撑`。
@@ -405,6 +407,15 @@ data.isolation.excludeTables=dict_type,config
 ## 许可证
 
 本项目基于 [Apache 2.0许可证](https://github.com/g2rain/g2rain-crafter/blob/main/LICENSE) 开源。
+
+## 工程文档
+
+- [文档导航](docs/index.md)
+- [项目元数据](docs/project.yaml)
+- [生成契约](docs/architecture/generation-contract.md)
+- [架构偏差](docs/architecture/deviations.md)
+- [安全边界](docs/security/security-boundaries.md)
+- [需求入口](docs/requirements/README.md)
 
 ## 联系我们
 

@@ -1,0 +1,84 @@
+schemaVersion: 1
+name: g2rain-crafter
+repository: g2rain/g2rain-crafter
+family: platform-tool
+architectureType: backend-scaffolding-maven-plugin
+role: G2rain 官方后端项目骨架与业务代码生成器
+version: 1.0.7
+license: Apache-2.0
+
+centralRegistration:
+  repository: https://github.com/g2rain/g2rain
+  ref: 37b4dd4
+  document: docs/architecture/platform-tools/g2rain-crafter.md
+  status: registered
+  implementationPolicy: organization-singleton
+  relatedProfile: java-domain-service
+  relatedProfileVersion: 1.0.0
+
+toolchain:
+  java: "25"
+  build: Maven
+  packaging: maven-plugin
+  goalPrefix: g2rain
+  goal: bootstrap
+  generatorDependency: com.g2rain:g2rain-generator-maven-plugin:1.0.6
+  templates: FreeMarker
+  tests: JUnit 6 + Mockito
+
+ownership:
+  owns:
+    - bootstrap Goal 及交互和非交互参数
+    - skeleton 和 foundry 阶段编排
+    - API/Biz/Startup 内置工程模板
+    - 模板渲染、目标路径和覆盖保护
+    - Crafter、Generator、模板和目标 Profile 兼容关系
+  excludes:
+    - 底层表元数据到业务代码的全部生成实现
+    - 生成项目的领域需求和项目级架构偏差
+    - 生成项目的生产运行、配置和发布
+
+generation:
+  phases:
+    full: skeleton then foundry
+    skeleton: project skeleton only
+    foundry: business code only
+  modules:
+    - api
+    - biz
+    - startup
+  configPrecedence: explicit Maven properties over codegen.properties over interactive input
+  overwriteDefault: false
+  targetProfile: java-domain-service 1.0.0
+
+commands:
+  verify: mvn test
+  package: mvn clean package
+  install: mvn clean install
+  help: mvn com.g2rain:g2rain-crafter:1.0.7:help
+  skeleton: mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap -Dphase=skeleton
+  foundry: mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap -Dphase=foundry -Dconfig.file=codegen.properties
+
+verification:
+  status: test-passed
+  verifiedAt: "2026-08-27"
+  command: mvn test
+  testsRun: 12
+  failures: 0
+  errors: 0
+  skipped: 0
+  generatedProjectBuild: not-run
+  realDatabaseFoundry: not-run
+
+documentation:
+  entry: docs/index.md
+  agentEntry: AGENTS.md
+
+aiCoding:
+  activeRequirement: null
+  requirementTemplate: docs/requirements/README.md
+  validation:
+    - 读取中央登记、本地偏差、当前需求、POM、模板、源码、测试和 Git Diff
+    - 执行 mvn test
+    - 在临时目录验证 skeleton、foundry、完整模式和路径安全
+    - 构建生成项目并检查未替换占位符、覆盖范围和 Profile 一致性

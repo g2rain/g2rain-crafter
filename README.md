@@ -143,13 +143,13 @@ flowchart TD
 | 步骤 | 命令或位置 | 说明 |
 | --- | --- | --- |
 | 准备构建环境 | JDK 25+、Maven 3.9+ | 工具组件通常只需要 Java 与 Maven 构建环境。 |
-| 查看插件帮助 | `mvn com.g2rain:g2rain-crafter:1.0.7:help` | 确认 Maven 能解析插件并查看 bootstrap Goal 参数。 |
-| 生成项目骨架 | `mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap -Dphase=skeleton -Darchetype.groupId=com.example -Darchetype.artifactId=demo-service -Darchetype.package=com.example.demo` | 在当前目录生成标准三模块项目骨架。 |
-| 生成业务代码 | `mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap -Dphase=foundry -Dconfig.file=codegen.properties` | 进入生成项目根目录后，根据配置文件为数据库表生成业务代码。 |
+| 查看插件帮助 | `mvn com.g2rain:g2rain-crafter:1.0.8:help` | 确认 Maven 能解析插件并查看 bootstrap Goal 参数。 |
+| 生成项目骨架 | `mvn com.g2rain:g2rain-crafter:1.0.8:bootstrap -Dphase=skeleton -Darchetype.groupId=com.example -Darchetype.artifactId=demo-service -Darchetype.package=com.example.demo` | 在当前目录生成标准三模块项目骨架。 |
+| 生成业务代码 | `mvn com.g2rain:g2rain-crafter:1.0.8:bootstrap -Dphase=foundry -Dconfig.file=codegen.properties` | 进入生成项目根目录后，根据配置文件为数据库表生成业务代码。 |
 | 构建组件 | `mvn clean package` | 执行 Maven 构建，生成可发布或可本地安装的组件产物。 |
 | 本地安装 | `mvn clean install` | 安装到本地 Maven 仓库，便于业务工程试用插件目标。 |
 
-版本号以项目构建配置为准，当前识别为 `1.0.7`。
+版本号以项目构建配置为准，当前识别为 `1.0.8`。
 
 ## 配置说明
 
@@ -205,7 +205,7 @@ flowchart TD
 
 | 目标 | 命令 | 产物 | 说明 |
 | --- | --- | --- | --- |
-| 组件产物 | `mvn clean package` | `g2rain-crafter-1.0.7.jar` | 执行 Maven 标准构建，生成可发布的 Maven 插件产物。 |
+| 组件产物 | `mvn clean package` | `g2rain-crafter-1.0.8.jar` | 执行 Maven 标准构建，生成可发布的 Maven 插件产物。 |
 | 本地 Maven 安装 | `mvn clean install` | `本地 Maven 仓库产物` | 安装到本地 Maven 仓库，便于业务工程本地验证插件目标。 |
 
 ## 使用示例
@@ -215,7 +215,7 @@ flowchart TD
 在支持 System.console() 的真实终端中直接运行。插件先询问项目骨架参数，再询问数据库与代码生成参数，随后连续执行 skeleton 和 foundry。
 
 ```console
-mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap
+mvn com.g2rain:g2rain-crafter:1.0.8:bootstrap
 Group ID [required]: com.example
 Artifact ID [required]: demo-service
 Version [optional, default 1.0.0]: 1.0.0
@@ -234,7 +234,7 @@ Overwrite existing files? (y/N, default N): n
 只询问项目坐标、基础包和描述。版本直接回车时使用默认值 1.0.0。
 
 ```console
-mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap -Dphase=skeleton
+mvn com.g2rain:g2rain-crafter:1.0.8:bootstrap -Dphase=skeleton
 Group ID [required]: com.example
 Artifact ID [required]: demo-service
 Version [optional, default 1.0.0]:
@@ -247,7 +247,7 @@ Description [optional]: Demo service
 必须先进入包含 pom.xml 的现有项目根目录。密码可直接回车留空，覆盖选项支持 y/yes/true/1 与 n/no/false/0。
 
 ```console
-mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap -Dphase=foundry
+mvn com.g2rain:g2rain-crafter:1.0.8:bootstrap -Dphase=foundry
 Base Package [required]: com.example.demo
 Database URL [required]: jdbc:mysql://localhost:3306/demo
 Driver Class [required]: com.mysql.cj.jdbc.Driver
@@ -262,7 +262,7 @@ Overwrite existing files? (y/N, default N): n
 查看 bootstrap Goal 的参数、类型和说明。
 
 ```bash
-mvn com.g2rain:g2rain-crafter:1.0.7:help -Ddetail=true -Dgoal=bootstrap
+mvn com.g2rain:g2rain-crafter:1.0.8:help -Ddetail=true -Dgoal=bootstrap
 ```
 
 ### 完整生成
@@ -270,7 +270,7 @@ mvn com.g2rain:g2rain-crafter:1.0.7:help -Ddetail=true -Dgoal=bootstrap
 不指定 phase，先生成项目骨架，再为指定数据库表生成业务代码。
 
 ```bash
-mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap -Darchetype.groupId=com.example -Darchetype.artifactId=demo-service -Darchetype.version=1.0.0 -Darchetype.package=com.example.demo -Ddatabase.url=jdbc:mysql://localhost:3306/demo -Ddatabase.driver=com.mysql.cj.jdbc.Driver -Ddatabase.username=root -Ddatabase.password=YOUR_PASSWORD -Ddatabase.tables=user,product
+mvn com.g2rain:g2rain-crafter:1.0.8:bootstrap -Darchetype.groupId=com.example -Darchetype.artifactId=demo-service -Darchetype.version=1.0.0 -Darchetype.package=com.example.demo -Ddatabase.url=jdbc:mysql://localhost:3306/demo -Ddatabase.driver=com.mysql.cj.jdbc.Driver -Ddatabase.username=root -Ddatabase.password=YOUR_PASSWORD -Ddatabase.tables=user,product
 ```
 
 ### 只生成项目骨架
@@ -278,7 +278,7 @@ mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap -Darchetype.groupId=com.example -D
 生成根 POM、API/Biz/Startup 模块、启动类和 codegen.properties。
 
 ```bash
-mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap -Dphase=skeleton -Darchetype.groupId=com.example -Darchetype.artifactId=demo-service -Darchetype.version=1.0.0 -Darchetype.package=com.example.demo -Darchetype.description=DemoService
+mvn com.g2rain:g2rain-crafter:1.0.8:bootstrap -Dphase=skeleton -Darchetype.groupId=com.example -Darchetype.artifactId=demo-service -Darchetype.version=1.0.0 -Darchetype.package=com.example.demo -Darchetype.description=DemoService
 ```
 
 ### 使用配置文件生成业务代码
@@ -286,7 +286,7 @@ mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap -Dphase=skeleton -Darchetype.group
 必须在已有 Maven 项目的根目录执行，并从配置文件读取数据库与表参数。
 
 ```bash
-mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap -Dphase=foundry -Dconfig.file=codegen.properties
+mvn com.g2rain:g2rain-crafter:1.0.8:bootstrap -Dphase=foundry -Dconfig.file=codegen.properties
 ```
 
 ### 命令行直接生成业务代码
@@ -294,7 +294,7 @@ mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap -Dphase=foundry -Dconfig.file=code
 不读取配置文件，直接通过命令行提供 Foundry 所需参数。
 
 ```bash
-mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap -Dphase=foundry -Darchetype.package=com.example.demo -Ddatabase.url=jdbc:mysql://localhost:3306/demo -Ddatabase.driver=com.mysql.cj.jdbc.Driver -Ddatabase.username=root -Ddatabase.password=YOUR_PASSWORD -Ddatabase.tables=user,product
+mvn com.g2rain:g2rain-crafter:1.0.8:bootstrap -Dphase=foundry -Darchetype.package=com.example.demo -Ddatabase.url=jdbc:mysql://localhost:3306/demo -Ddatabase.driver=com.mysql.cj.jdbc.Driver -Ddatabase.username=root -Ddatabase.password=YOUR_PASSWORD -Ddatabase.tables=user,product
 ```
 
 ### 覆盖已有生成文件
@@ -302,7 +302,7 @@ mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap -Dphase=foundry -Darchetype.packag
 显式允许覆盖已有生成文件；默认 false，使用前应提交或备份当前修改。
 
 ```bash
-mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap -Dphase=foundry -Dconfig.file=codegen.properties -Dtables.overwrite=true
+mvn com.g2rain:g2rain-crafter:1.0.8:bootstrap -Dphase=foundry -Dconfig.file=codegen.properties -Dtables.overwrite=true
 ```
 
 ### 命令行配置数据隔离生成
@@ -310,7 +310,7 @@ mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap -Dphase=foundry -Dconfig.file=code
 识别租户表，并排除不应生成隔离代码的表。
 
 ```bash
-mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap -Dphase=foundry -Dconfig.file=codegen.properties -Ddata.isolation.withIsolation=true -Ddata.isolation.tenantColumns=organ_id,tenant_id -Ddata.isolation.excludeTables=dict_type,config
+mvn com.g2rain:g2rain-crafter:1.0.8:bootstrap -Dphase=foundry -Dconfig.file=codegen.properties -Ddata.isolation.withIsolation=true -Ddata.isolation.tenantColumns=organ_id,tenant_id -Ddata.isolation.excludeTables=dict_type,config
 ```
 
 ### codegen.properties 示例

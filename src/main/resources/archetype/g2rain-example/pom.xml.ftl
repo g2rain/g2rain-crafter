@@ -40,12 +40,12 @@
         <mybatis.version>4.0.1</mybatis.version>
         <mysql.version>9.6.0</mysql.version>
         <mapstruct.version>1.6.3</mapstruct.version>
-        <g2rain.common.version>1.0.6</g2rain.common.version>
-        <g2rain.aegis.core.version>1.0.3</g2rain.aegis.core.version>
-        <g2rain.data.redis.version>1.0.3</g2rain.data.redis.version>
-        <g2rain-starter-mybatis-extensions.version>1.0.3</g2rain-starter-mybatis-extensions.version>
-        <g2rain.starter.spring.doc.version>1.0.3</g2rain.starter.spring.doc.version>
-        <g2rain.crafter.version>1.0.7</g2rain.crafter.version>
+        <g2rain.common.version>1.0.8</g2rain.common.version>
+        <g2rain.aegis.core.version>1.0.5</g2rain.aegis.core.version>
+        <g2rain.data.redis.version>1.0.5</g2rain.data.redis.version>
+        <g2rain-starter-mybatis-extensions.version>1.0.5</g2rain-starter-mybatis-extensions.version>
+        <g2rain.starter.spring.doc.version>1.0.5</g2rain.starter.spring.doc.version>
+        <g2rain.crafter.version>1.0.8</g2rain.crafter.version>
         <flatten.maven.plugin.version>1.7.3</flatten.maven.plugin.version>
         <jib.maven.plugin.version>3.5.1</jib.maven.plugin.version>
         <maven.source.plugin.version>3.4.0</maven.source.plugin.version>

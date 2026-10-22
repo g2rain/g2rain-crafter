@@ -62,27 +62,39 @@
     </distributionManagement>
 
     <properties>
-        <maven.plugin.version>3.9.14</maven.plugin.version>
+        <!--
+            maven-core 传递 ASM 仍低于安全线，临时覆盖；Maven 抬升后可删。
+            - ASM：asm.version（asm-bom）
+        -->
+        <asm.version>9.11.1</asm.version>
+        <maven.plugin.version>3.10.0</maven.plugin.version>
         <g2rain.generator.version>1.0.7</g2rain.generator.version>
-        <junit.jupiter.version>6.0.3</junit.jupiter.version>
-        <lombok.version>1.18.44</lombok.version>
-        <mockito.core.version>5.23.0</mockito.core.version>
-        <junit.suite.engine.version>6.0.3</junit.suite.engine.version>
-        <junit.suite.api.version>6.0.3</junit.suite.api.version>
-        <maven.plugin.tools.version>3.15.2</maven.plugin.tools.version>
-        <compiler.plugin.version>3.15.0</compiler.plugin.version>
-        <compiler.surefire.version>3.5.0</compiler.surefire.version>
+        <junit.jupiter.version>6.1.3</junit.jupiter.version>
+        <lombok.version>1.18.48</lombok.version>
+        <mockito.core.version>5.24.0</mockito.core.version>
+        <junit.suite.engine.version>6.1.3</junit.suite.engine.version>
+        <junit.suite.api.version>6.1.3</junit.suite.api.version>
+        <maven.plugin.tools.version>3.16.0</maven.plugin.tools.version>
+        <compiler.plugin.version>3.16.0</compiler.plugin.version>
+        <compiler.surefire.version>3.6.0</compiler.surefire.version>
         <maven.source.plugin.version>3.4.0</maven.source.plugin.version>
         <maven.javadoc.plugin.version>3.12.0</maven.javadoc.plugin.version>
-        <flatten.maven.plugin.version>1.7.3</flatten.maven.plugin.version>
+        <flatten.maven.plugin.version>1.8.0</flatten.maven.plugin.version>
         <maven.gpg.plugin.version>3.2.8</maven.gpg.plugin.version>
-        <central.publishing.maven.plugin.version>0.10.0</central.publishing.maven.plugin.version>
+        <central.publishing.maven.plugin.version>0.12.0</central.publishing.maven.plugin.version>
         <maven.compiler.release>25</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.ow2.asm</groupId>
+                <artifactId>asm-bom</artifactId>
+                <version>${asm.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
             <dependency>
                 <groupId>org.apache.maven</groupId>
                 <artifactId>maven-core</artifactId>

@@ -8,7 +8,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.0.5</version>
+        <version>4.1.1</version>
     </parent>
 
     <groupId>${groupId}</groupId>
@@ -30,15 +30,27 @@
     <properties>
         <revision>${version}</revision>
         <!--
-            spring boot 4.0.5 引入的是3.1.0 但是3.1.0 有漏洞, 所以升级到3.1.1,
-            后续如果升级spring boot 版本, 酌情是否删掉这个属性
+            Boot 4.1.1 基线仍低于部分安全修复线，临时覆盖；Boot/Cloud 抬升后可删。
+            - Jackson 3 / Jackson 2：jackson-bom.version、fasterxml.jackson.version
+            - Tomcat / Logback / SLF4J：tomcat.version、logback.version、slf4j.version
+            - ASM：asm.version（asm-bom）
+            - Bouncy Castle：bouncycastle.version（OpenFeign 传递）
+            - Kafka 压缩库：zstd-jni / lz4-java / snappy-java（kafka-clients 传递）
         -->
-        <jackson-bom.version>3.1.1</jackson-bom.version>
-        <spring.cloud.version>2025.1.1</spring.cloud.version>
+        <jackson-bom.version>3.2.3</jackson-bom.version>
+        <fasterxml.jackson.version>2.22.4</fasterxml.jackson.version>
+        <tomcat.version>11.0.27</tomcat.version>
+        <logback.version>1.6.5</logback.version>
+        <slf4j.version>2.0.20</slf4j.version>
+        <asm.version>9.11.1</asm.version>
+        <bouncycastle.version>1.86</bouncycastle.version>
+        <zstd-jni.version>1.5.7-24</zstd-jni.version>
+        <lz4-java.version>1.12.0</lz4-java.version>
+        <snappy-java.version>1.1.10.12</snappy-java.version>
+        <spring.cloud.version>2025.1.3</spring.cloud.version>
         <spring.alibaba.nacos.version>2025.1.0.0</spring.alibaba.nacos.version>
-        <commons.fileupload.version>1.6.0</commons.fileupload.version>
-        <mybatis.version>4.0.1</mybatis.version>
-        <mysql.version>9.6.0</mysql.version>
+        <mybatis.version>4.1.0</mybatis.version>
+        <mysql.version>26.10.0</mysql.version>
         <mapstruct.version>1.6.3</mapstruct.version>
         <g2rain.common.version>1.0.8</g2rain.common.version>
         <g2rain.aegis.core.version>1.0.5</g2rain.aegis.core.version>
@@ -46,8 +58,8 @@
         <g2rain-starter-mybatis-extensions.version>1.0.5</g2rain-starter-mybatis-extensions.version>
         <g2rain.starter.spring.doc.version>1.0.5</g2rain.starter.spring.doc.version>
         <g2rain.crafter.version>1.0.8</g2rain.crafter.version>
-        <flatten.maven.plugin.version>1.7.3</flatten.maven.plugin.version>
-        <jib.maven.plugin.version>3.5.1</jib.maven.plugin.version>
+        <flatten.maven.plugin.version>1.8.0</flatten.maven.plugin.version>
+        <jib.maven.plugin.version>3.5.2</jib.maven.plugin.version>
         <maven.source.plugin.version>3.4.0</maven.source.plugin.version>
         <maven.compiler.release>25</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -70,9 +82,43 @@
                 <scope>import</scope>
             </dependency>
             <dependency>
-                <groupId>commons-fileupload</groupId>
-                <artifactId>commons-fileupload</artifactId>
-                <version>${"$"}{commons.fileupload.version}</version>
+                <groupId>com.fasterxml.jackson</groupId>
+                <artifactId>jackson-bom</artifactId>
+                <version>${"$"}{fasterxml.jackson.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.ow2.asm</groupId>
+                <artifactId>asm-bom</artifactId>
+                <version>${"$"}{asm.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcprov-jdk18on</artifactId>
+                <version>${"$"}{bouncycastle.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcpkix-jdk18on</artifactId>
+                <version>${"$"}{bouncycastle.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.luben</groupId>
+                <artifactId>zstd-jni</artifactId>
+                <version>${"$"}{zstd-jni.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>at.yawk.lz4</groupId>
+                <artifactId>lz4-java</artifactId>
+                <version>${"$"}{lz4-java.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.xerial.snappy</groupId>
+                <artifactId>snappy-java</artifactId>
+                <version>${"$"}{snappy-java.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>

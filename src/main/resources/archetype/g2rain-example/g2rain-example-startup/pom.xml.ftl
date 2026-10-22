@@ -65,7 +65,7 @@
                 <version>${"$"}{jib.maven.plugin.version}</version>
                 <configuration>
                     <from>
-                        <image>docker://eclipse-temurin:25-jre</image>
+                        <image>docker://eclipse-temurin:25.0.4.1_1-jre</image>
                     </from>
                     <to>
                         <image>g2rain/${projectName}:${"$"}{project.version}</image>

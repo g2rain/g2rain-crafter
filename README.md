@@ -9,11 +9,11 @@
 [![Java](https://img.shields.io/badge/Java-25-437291?logo=openjdk&logoColor=white)](https://openjdk.org/)
 [![Maven](https://img.shields.io/badge/build-Maven-C71A36?logo=apachemaven&logoColor=white)](https://maven.apache.org/)
 
-下一代AI软件开发范式，AI原生Agent平台，开源的企业级SaaS底座。
+谷雨G2rain智能体平台的后端工程骨架与业务代码生成工具。
 
 交互式项目骨架与业务代码生成 Maven 插件，通过 bootstrap Goal 编排 skeleton 与 foundry 两个阶段；可创建 API/Biz/Startup 三模块工程，并根据数据库表结构持续生成业务代码；作为平台后端研发支撑层被多个 g2rain 服务复用
 
-[官网](https://www.g2rain.com) · [Issues](https://github.com/g2rain/g2rain/issues) · [Discussions](https://github.com/g2rain/g2rain/discussions)
+[官网](http://www.g2rain.com) · [工程文档](docs/index.md) · [Issues](https://github.com/g2rain/g2rain/issues) · [Discussions](https://github.com/g2rain/g2rain/discussions)
 
 ## 目录
 
@@ -81,7 +81,7 @@
 | 模板资源兼容 | SkeletonGenerator 同时支持从开发文件系统和已发布 Jar 读取模板，渲染 .ftl 文件并复制普通资源。 |
 | 数据库业务代码生成 | 复用 g2rain-generator-maven-plugin 的 FoundryGenerator，按表生成后端分层代码。 |
 | 多来源配置 | 支持命令行参数、codegen.properties 和交互式控制台输入，并以显式命令行值优先。 |
-| 安全写入与数据隔离 | 通过 tables.overwrite 控制覆盖，并按 tenantColumns、excludeTables 和 withIsolation 决定隔离代码生成。 |
+| 覆盖与数据隔离 | foundry 通过 `tables.overwrite` 控制生成文件覆盖；按 tenantColumns、excludeTables 和 withIsolation 决定隔离代码生成。skeleton 的模板和普通资源写入不受此开关保护。 |
 
 ## 使用场景
 
@@ -113,8 +113,9 @@ flowchart TD
   C --> F[渲染 FreeMarker 工程模板]
   D --> F
   F --> G[生成 API/Biz/Startup 三模块骨架]
-  G --> H[执行 Foundry 代码生成]
-  C --> H
+  G --> K{是否为完整模式}
+  K -->|是| H[执行 Foundry 代码生成]
+  K -->|否| L[骨架生成完成]
   E --> H
   H --> I[按数据库表生成分层业务代码]
   J[覆盖与数据隔离选项] --> H
@@ -202,6 +203,8 @@ flowchart TD
 | `data.isolation.excludeTables` | 即使命中租户列也不生成隔离代码的表，使用逗号分隔。 |
 
 ## 构建与发布
+
+本地验证命令为 `mvn test`。2026-10-30 的执行在 Generator `1.0.8` 依赖解析阶段失败，测试未运行；生成项目构建及真实数据库 foundry 仍待验证。依赖组合与处理说明见[依赖与版本](docs/architecture/dependencies.md)。
 
 | 目标 | 命令 | 产物 | 说明 |
 | --- | --- | --- | --- |
@@ -337,6 +340,7 @@ data.isolation.excludeTables=dict_type,config
 | 依赖可信边界 | 作为平台共享组件或构建工具，应通过组织 Maven 仓库、版本锁定和发布流程控制依赖来源。 |
 | 数据库凭据 | database.password 不应提交到仓库；优先通过本地忽略文件、环境注入或 CI 密钥提供，并限制数据库账号仅可读取生成所需的元数据。 |
 | 文件覆盖 | tables.overwrite 默认为 false；设为 true 前应提交或备份工作区，并确认生成范围，避免覆盖手工维护的业务代码。 |
+| 骨架生成 | skeleton 普通资源复制使用 `REPLACE_EXISTING`，不受 foundry 的覆盖开关保护；请在新的空目录中生成并审阅结果，再合并到已有工程。 |
 | 执行目录 | foundry 阶段必须在目标 Maven 项目根目录执行；自动化任务应固定工作目录，避免把文件生成到错误位置。 |
 | 模板与插件来源 | 项目骨架和业务代码来自插件 Jar 及其生成器依赖，应固定可信版本并审查升级后的模板、依赖和生成差异。 |
 | 数据隔离配置 | tenantColumns 和 excludeTables 会影响哪些表生成隔离代码；上线前必须结合真实租户边界复核生成注解与无隔离访问方法。 |

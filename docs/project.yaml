@@ -22,7 +22,7 @@ toolchain:
   packaging: maven-plugin
   goalPrefix: g2rain
   goal: bootstrap
-  generatorDependency: com.g2rain:g2rain-generator-maven-plugin:1.0.8
+  generatorDependency: com.g2rain:g2rain-generator-maven-plugin:1.0.6
   templates: FreeMarker
   tests: JUnit 6 + Mockito
 
@@ -61,7 +61,7 @@ commands:
 
 verification:
   status: test-passed
-  verifiedAt: "2026-08-27"
+  verifiedAt: "2026-10-05"
   command: mvn test
   testsRun: 12
   failures: 0
@@ -73,6 +73,14 @@ verification:
 documentation:
   entry: docs/index.md
   agentEntry: AGENTS.md
+
+initializationVerification:
+  observedAt: "2026-10-30"
+  command: mvn test
+  status: blocked-dependency-resolution
+  resolvedGeneratorFromPom: com.g2rain:g2rain-generator-maven-plugin:1.0.8
+  testsExecuted: false
+  note: Generator 1.0.8 无法解析；toolchain.generatorDependency 的既有未提交修改为 1.0.6，与 POM 冲突，保留待确认。verification 节为历史结果。
 
 aiCoding:
   activeRequirement: null

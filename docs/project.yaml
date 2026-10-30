@@ -4,7 +4,7 @@ repository: g2rain/g2rain-crafter
 family: platform-tool
 architectureType: backend-scaffolding-maven-plugin
 role: G2rain 官方后端项目骨架与业务代码生成器
-version: 1.0.7
+version: 1.0.9
 license: Apache-2.0
 
 centralRegistration:
@@ -22,7 +22,7 @@ toolchain:
   packaging: maven-plugin
   goalPrefix: g2rain
   goal: bootstrap
-  generatorDependency: com.g2rain:g2rain-generator-maven-plugin:1.0.6
+  generatorDependency: com.g2rain:g2rain-generator-maven-plugin:1.0.8
   templates: FreeMarker
   tests: JUnit 6 + Mockito
 
@@ -55,9 +55,9 @@ commands:
   verify: mvn test
   package: mvn clean package
   install: mvn clean install
-  help: mvn com.g2rain:g2rain-crafter:1.0.7:help
-  skeleton: mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap -Dphase=skeleton
-  foundry: mvn com.g2rain:g2rain-crafter:1.0.7:bootstrap -Dphase=foundry -Dconfig.file=codegen.properties
+  help: mvn com.g2rain:g2rain-crafter:1.0.9:help
+  skeleton: mvn com.g2rain:g2rain-crafter:1.0.9:bootstrap -Dphase=skeleton
+  foundry: mvn com.g2rain:g2rain-crafter:1.0.9:bootstrap -Dphase=foundry -Dconfig.file=codegen.properties
 
 verification:
   status: test-passed

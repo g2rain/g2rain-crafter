@@ -6,7 +6,7 @@
 
     <groupId>com.g2rain</groupId>
     <artifactId>g2rain-crafter</artifactId>
-    <version>1.0.8</version>
+    <version>1.0.9</version>
     <packaging>maven-plugin</packaging>
 
     <name>G2Rain Crafter</name>
@@ -62,13 +62,8 @@
     </distributionManagement>
 
     <properties>
-        <!--
-            maven-core 传递 ASM 仍低于安全线，临时覆盖；Maven 抬升后可删。
-            - ASM：asm.version（asm-bom）
-        -->
-        <asm.version>9.11.1</asm.version>
         <maven.plugin.version>3.10.0</maven.plugin.version>
-        <g2rain.generator.version>1.0.7</g2rain.generator.version>
+        <g2rain.generator.version>1.0.8</g2rain.generator.version>
         <junit.jupiter.version>6.1.3</junit.jupiter.version>
         <lombok.version>1.18.48</lombok.version>
         <mockito.core.version>5.24.0</mockito.core.version>
@@ -88,13 +83,6 @@
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>org.ow2.asm</groupId>
-                <artifactId>asm-bom</artifactId>
-                <version>${asm.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
             <dependency>
                 <groupId>org.apache.maven</groupId>
                 <artifactId>maven-core</artifactId>
@@ -245,7 +233,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${compiler.surefire.version}</version>
                 <configuration>
-                    <!-- Mockito inline mocks + Byte Buddy: JDK 25 classfile (69) requires experimental mode until Byte Buddy fully supports it -->
+                    <!-- Mockito inline mocks + Byte Buddy: JDK 25 class file (69) requires experimental mode until Byte Buddy fully supports it -->
                     <argLine>-XX:+EnableDynamicAgentLoading -Xshare:off -Dnet.bytebuddy.experimental=true</argLine>
                 </configuration>
                 <dependencies>

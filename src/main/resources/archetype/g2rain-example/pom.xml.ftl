@@ -36,12 +36,12 @@
         -->
         <jackson-bom.version>3.2.4</jackson-bom.version>
         <!--
-            SpringDoc 3.3.1 传递依赖引入的 Jackson 2 组件版本高于当前依赖管理版本，
-            临时通过 Jackson BOM 统一覆盖至 2.23.0，满足依赖上界检查及安全扫描要求。
-            后续升级 SpringDoc 基线后，可根据依赖树评估是否移除。
-            - Jackson 2: 2.22 → 2.23.0（fasterxml.jackson.version）
+            Jackson 3 覆盖为 3.2.4 后，jackson-databind 要求 jackson-annotations ≥ 2.22，
+            而 Spring Boot 4.2 管理的 jackson-annotations 为 2.21，单独提升以满足依赖上界检查。
+            jackson-annotations 自 2.20 起只发布主次版本号（如 2.23），没有补丁位。
+            Spring Boot 管理的版本跟上后可移除。
         -->
-        <fasterxml.jackson.version>2.23.0</fasterxml.jackson.version>
+        <jackson.annotations.version>2.23</jackson.annotations.version>
         <!-- 统一 Objenesis 版本，解决 Mockito 与 Kryo 传递依赖的版本冲突 -->
         <objenesis.version>3.6</objenesis.version>
         <spring.cloud.version>2026.0.0</spring.cloud.version>
@@ -79,11 +79,9 @@
                 <scope>import</scope>
             </dependency>
             <dependency>
-                <groupId>com.fasterxml.jackson</groupId>
-                <artifactId>jackson-bom</artifactId>
-                <version>${"$"}{fasterxml.jackson.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${"$"}{jackson.annotations.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.objenesis</groupId>

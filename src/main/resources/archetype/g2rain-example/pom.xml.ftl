@@ -8,7 +8,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.1.2</version>
+        <version>4.2.0</version>
     </parent>
 
     <groupId>${groupId}</groupId>
@@ -36,23 +36,25 @@
         -->
         <jackson-bom.version>3.2.4</jackson-bom.version>
         <!--
-            SpringDoc 3.2.0 传递依赖引入的 Jackson 2 组件版本高于当前依赖管理版本，
-            临时通过 Jackson BOM 统一覆盖至 2.22.4，满足依赖上界检查及安全扫描要求。
+            SpringDoc 3.3.1 传递依赖引入的 Jackson 2 组件版本高于当前依赖管理版本，
+            临时通过 Jackson BOM 统一覆盖至 2.23.0，满足依赖上界检查及安全扫描要求。
             后续升级 SpringDoc 基线后，可根据依赖树评估是否移除。
-            - Jackson 2: 2.21 → 2.22.4（fasterxml.jackson.version）
+            - Jackson 2: 2.22 → 2.23.0（fasterxml.jackson.version）
         -->
-        <fasterxml.jackson.version>2.22.4</fasterxml.jackson.version>
-        <spring.cloud.version>2025.1.4</spring.cloud.version>
+        <fasterxml.jackson.version>2.23.0</fasterxml.jackson.version>
+        <!-- 统一 Objenesis 版本，解决 Mockito 与 Kryo 传递依赖的版本冲突 -->
+        <objenesis.version>3.6</objenesis.version>
+        <spring.cloud.version>2026.0.0</spring.cloud.version>
         <spring.alibaba.nacos.version>2025.1.0.0</spring.alibaba.nacos.version>
         <mybatis.version>4.1.0</mybatis.version>
         <mysql.version>26.10.0</mysql.version>
         <mapstruct.version>1.6.3</mapstruct.version>
-        <g2rain.common.version>1.0.9</g2rain.common.version>
-        <g2rain.aegis.core.version>1.0.6</g2rain.aegis.core.version>
-        <g2rain.data.redis.version>1.0.6</g2rain.data.redis.version>
-        <g2rain-starter-mybatis-extensions.version>1.0.6</g2rain-starter-mybatis-extensions.version>
-        <g2rain.starter.spring.doc.version>1.0.6</g2rain.starter.spring.doc.version>
-        <g2rain.crafter.version>1.0.9</g2rain.crafter.version>
+        <g2rain.common.version>1.0.10</g2rain.common.version>
+        <g2rain.aegis.core.version>1.0.7</g2rain.aegis.core.version>
+        <g2rain.data.redis.version>1.0.7</g2rain.data.redis.version>
+        <g2rain.starter.mybatis.extensions.version>1.0.7</g2rain.starter.mybatis.extensions.version>
+        <g2rain.starter.spring.doc.version>1.0.7</g2rain.starter.spring.doc.version>
+        <g2rain.crafter.version>1.0.10</g2rain.crafter.version>
         <flatten.maven.plugin.version>1.8.0</flatten.maven.plugin.version>
         <jib.maven.plugin.version>3.5.2</jib.maven.plugin.version>
         <maven.source.plugin.version>3.4.0</maven.source.plugin.version>
@@ -82,6 +84,11 @@
                 <version>${"$"}{fasterxml.jackson.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.objenesis</groupId>
+                <artifactId>objenesis</artifactId>
+                <version>${"$"}{objenesis.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
@@ -122,7 +129,7 @@
             <dependency>
                 <groupId>com.g2rain</groupId>
                 <artifactId>g2rain-starter-mybatis-extensions</artifactId>
-                <version>${"$"}{g2rain-starter-mybatis-extensions.version}</version>
+                <version>${"$"}{g2rain.starter.mybatis.extensions.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.g2rain</groupId>

@@ -1,6 +1,6 @@
 # 依赖与版本
 
-Crafter `1.0.9` 当前依赖 `g2rain-generator-maven-plugin 1.0.8`，内置模板目标为 `java-domain-service 1.0.0` 的 API/Biz/Startup 结构。
+Crafter `1.0.10` 当前依赖 `g2rain-generator-maven-plugin 1.0.9`，内置模板目标为 `java-domain-service 1.0.0` 的 API/Biz/Startup 结构。
 
 2026-10-30 核对：中央工具登记仍列 Crafter `1.0.7` / Generator `1.0.6`；当前根 POM 的 `g2rain.generator.version` 为 `1.0.8`。工作区已有的 `project.yaml` 修改将 `toolchain.generatorDependency` 写为 `1.0.6`，与 POM 不一致。本轮保留该未提交修改；依赖解析事实以 POM 为准，不能将中央历史组合当作当前组合。
 

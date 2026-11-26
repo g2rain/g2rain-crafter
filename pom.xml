@@ -6,7 +6,7 @@
 
     <groupId>com.g2rain</groupId>
     <artifactId>g2rain-crafter</artifactId>
-    <version>1.0.9</version>
+    <version>1.0.10</version>
     <packaging>maven-plugin</packaging>
 
     <name>G2Rain Crafter</name>
@@ -62,8 +62,8 @@
     </distributionManagement>
 
     <properties>
-        <maven.plugin.version>3.10.0</maven.plugin.version>
-        <g2rain.generator.version>1.0.8</g2rain.generator.version>
+        <maven.plugin.version>3.10.2</maven.plugin.version>
+        <g2rain.generator.version>1.0.9</g2rain.generator.version>
         <junit.jupiter.version>6.1.3</junit.jupiter.version>
         <lombok.version>1.18.48</lombok.version>
         <mockito.core.version>5.24.0</mockito.core.version>
@@ -71,7 +71,7 @@
         <junit.suite.api.version>6.1.3</junit.suite.api.version>
         <maven.plugin.tools.version>3.16.0</maven.plugin.tools.version>
         <compiler.plugin.version>3.16.0</compiler.plugin.version>
-        <compiler.surefire.version>3.6.0</compiler.surefire.version>
+        <compiler.surefire.version>3.6.1</compiler.surefire.version>
         <maven.source.plugin.version>3.4.0</maven.source.plugin.version>
         <maven.javadoc.plugin.version>3.12.0</maven.javadoc.plugin.version>
         <flatten.maven.plugin.version>1.8.0</flatten.maven.plugin.version>
